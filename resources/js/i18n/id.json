@@ -1,0 +1,122 @@
+{
+    "nav": {
+        "home": "Beranda",
+        "about": "Tentang",
+        "services": "Layanan",
+        "skills": "Keahlian",
+        "experience": "Pengalaman",
+        "projects": "Proyek",
+        "education": "Pendidikan",
+        "testimonials": "Testimoni",
+        "pricing": "Harga",
+        "blog": "Blog",
+        "contact": "Kontak",
+        "hireMe": "Hubungi Saya"
+    },
+    "hero": {
+        "eyebrow": "Tersedia untuk proyek baru",
+        "available": "Terbuka untuk peluang",
+        "subtitle": "Front End Web Developer · WordPress · Odoo · IT Lead",
+        "ctaPrimary": "Hubungi Saya",
+        "ctaSecondary": "Unduh CV",
+        "scroll": "Gulir untuk menjelajah"
+    },
+    "about": {
+        "eyebrow": "Tentang Saya",
+        "title": "Membangun pengalaman digital yang berperforma.",
+        "downloadCv": "Unduh CV",
+        "letsTalk": "Mari Diskusi"
+    },
+    "services": {
+        "eyebrow": "Yang Saya Tawarkan",
+        "title": "Layanan yang dirancang untuk pertumbuhan bisnis Anda.",
+        "subtitle": "Dari front-end pixel-perfect hingga Odoo & WordPress level enterprise."
+    },
+    "skills": {
+        "eyebrow": "Tech Stack",
+        "title": "Tools yang saya gunakan setiap hari.",
+        "categories": {
+            "frontend": "Front End",
+            "backend": "Back End",
+            "cms": "CMS / WordPress",
+            "other": "Lainnya"
+        }
+    },
+    "stats": {
+        "eyebrow": "Dalam Angka",
+        "title": "Rekam jejak berbasis hasil."
+    },
+    "experience": {
+        "eyebrow": "Pengalaman",
+        "title": "Tempat saya bekerja.",
+        "present": "Sekarang"
+    },
+    "projects": {
+        "eyebrow": "Karya Pilihan",
+        "title": "Proyek unggulan.",
+        "subtitle": "Sekilas website, ERP, dan aplikasi yang pernah saya kerjakan.",
+        "viewAll": "Lihat Semua",
+        "filter": {
+            "all": "Semua",
+            "wordpress": "WordPress",
+            "laravel": "Laravel",
+            "react": "React",
+            "vue": "Vue",
+            "odoo": "Odoo"
+        },
+        "viewLive": "Lihat Live",
+        "viewCode": "Code"
+    },
+    "education": {
+        "eyebrow": "Pendidikan",
+        "title": "Latar belakang akademis."
+    },
+    "certifications": {
+        "eyebrow": "Sertifikasi",
+        "title": "Belajar tanpa henti."
+    },
+    "testimonials": {
+        "eyebrow": "Apa Kata Mereka",
+        "title": "Testimoni klien."
+    },
+    "pricing": {
+        "eyebrow": "Harga",
+        "title": "Harga proyek yang transparan.",
+        "subtitle": "Pilih titik awal. Setiap proyek disesuaikan dengan tujuan Anda.",
+        "popular": "Paling Populer",
+        "from": "Mulai",
+        "custom": "Custom"
+    },
+    "blog": {
+        "eyebrow": "Blog",
+        "title": "Catatan & insight.",
+        "readMore": "Baca selengkapnya",
+        "minRead": "menit baca"
+    },
+    "contact": {
+        "eyebrow": "Kontak",
+        "title": "Mari bangun sesuatu yang hebat.",
+        "subtitle": "Kirim pesan dan saya akan membalas dalam 24 jam.",
+        "form": {
+            "name": "Nama Anda",
+            "email": "Email Anda",
+            "subject": "Subjek",
+            "message": "Pesan",
+            "send": "Kirim Pesan",
+            "sending": "Mengirim..."
+        },
+        "info": {
+            "email": "Email",
+            "phone": "Telepon",
+            "location": "Lokasi"
+        }
+    },
+    "footer": {
+        "rights": "Semua hak dilindungi.",
+        "made": "Dibangun dengan Laravel + React"
+    },
+    "common": {
+        "loading": "Memuat...",
+        "back": "Kembali"
+    }
+}

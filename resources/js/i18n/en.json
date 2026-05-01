@@ -1,0 +1,122 @@
+{
+    "nav": {
+        "home": "Home",
+        "about": "About",
+        "services": "Services",
+        "skills": "Skills",
+        "experience": "Experience",
+        "projects": "Projects",
+        "education": "Education",
+        "testimonials": "Testimonials",
+        "pricing": "Pricing",
+        "blog": "Blog",
+        "contact": "Contact",
+        "hireMe": "Hire Me"
+    },
+    "hero": {
+        "eyebrow": "Available for new projects",
+        "available": "Open to opportunities",
+        "subtitle": "Front End Web Developer · WordPress · Odoo · IT Lead",
+        "ctaPrimary": "Hire Me",
+        "ctaSecondary": "Download CV",
+        "scroll": "Scroll to explore"
+    },
+    "about": {
+        "eyebrow": "About Me",
+        "title": "Crafting digital experiences that perform.",
+        "downloadCv": "Download CV",
+        "letsTalk": "Let's Talk"
+    },
+    "services": {
+        "eyebrow": "What I Do",
+        "title": "Services tailored to your business growth.",
+        "subtitle": "From pixel-perfect front-ends to enterprise-grade Odoo and WordPress."
+    },
+    "skills": {
+        "eyebrow": "Tech Stack",
+        "title": "Tools I work with daily.",
+        "categories": {
+            "frontend": "Front End",
+            "backend": "Back End",
+            "cms": "CMS / WordPress",
+            "other": "Other"
+        }
+    },
+    "stats": {
+        "eyebrow": "By The Numbers",
+        "title": "A track record built on results."
+    },
+    "experience": {
+        "eyebrow": "Experience",
+        "title": "Where I've worked.",
+        "present": "Present"
+    },
+    "projects": {
+        "eyebrow": "Selected Work",
+        "title": "Featured projects.",
+        "subtitle": "A glimpse of websites, ERPs, and apps I've shipped.",
+        "viewAll": "View All",
+        "filter": {
+            "all": "All",
+            "wordpress": "WordPress",
+            "laravel": "Laravel",
+            "react": "React",
+            "vue": "Vue",
+            "odoo": "Odoo"
+        },
+        "viewLive": "View Live",
+        "viewCode": "Code"
+    },
+    "education": {
+        "eyebrow": "Education",
+        "title": "Academic background."
+    },
+    "certifications": {
+        "eyebrow": "Certifications",
+        "title": "Continuous learning."
+    },
+    "testimonials": {
+        "eyebrow": "Kind Words",
+        "title": "What clients say."
+    },
+    "pricing": {
+        "eyebrow": "Pricing",
+        "title": "Transparent project rates.",
+        "subtitle": "Pick a starting point. Every project is tailored to your goals.",
+        "popular": "Most Popular",
+        "from": "From",
+        "custom": "Custom"
+    },
+    "blog": {
+        "eyebrow": "Blog",
+        "title": "Notes & insights.",
+        "readMore": "Read more",
+        "minRead": "min read"
+    },
+    "contact": {
+        "eyebrow": "Contact",
+        "title": "Let's build something great.",
+        "subtitle": "Drop a message and I'll reply within 24 hours.",
+        "form": {
+            "name": "Your Name",
+            "email": "Your Email",
+            "subject": "Subject",
+            "message": "Message",
+            "send": "Send Message",
+            "sending": "Sending..."
+        },
+        "info": {
+            "email": "Email",
+            "phone": "Phone",
+            "location": "Location"
+        }
+    },
+    "footer": {
+        "rights": "All rights reserved.",
+        "made": "Built with Laravel + React"
+    },
+    "common": {
+        "loading": "Loading...",
+        "back": "Back"
+    }
+}
