@@ -25,6 +25,8 @@ export interface ProfileShared {
     whatsapp?: string | null;
     location?: string | null;
     avatar_url?: string | null;
+    hero_image_url?: string | null;
+    about_image_url?: string | null;
     cv_url?: string | null;
     socials?: Record<string, string> | null;
     stats?: Array<{

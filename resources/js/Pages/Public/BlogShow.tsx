@@ -39,13 +39,13 @@ export default function BlogShow({
             <Section className="pt-32">
                 <Link
                     href={route("blog.index")}
-                    className="mb-8 inline-flex items-center gap-2 text-sm text-ink-300 hover:text-brand-300"
+                    className="inline-flex items-center gap-2 mb-8 text-sm text-ink-300 hover:text-brand-300"
                 >
                     <ArrowLeft size={14} />
                     Back to blog
                 </Link>
 
-                <article className="mx-auto max-w-3xl">
+                <article className="max-w-3xl mx-auto">
                     <div className="flex items-center gap-3 text-xs text-ink-400">
                         {post.published_at && (
                             <span>{formatDate(post.published_at, locale)}</span>
@@ -57,7 +57,7 @@ export default function BlogShow({
                             </span>
                         )}
                     </div>
-                    <h1 className="mt-3 font-display text-4xl font-bold text-white sm:text-5xl">
+                    <h1 className="mt-3 text-4xl font-bold text-white font-display sm:text-5xl">
                         {title}
                     </h1>
                     {excerpt && (
@@ -67,27 +67,27 @@ export default function BlogShow({
                     )}
 
                     {post.cover_url && (
-                        <Glass className="mt-8 overflow-hidden p-0">
+                        <Glass className="p-0 mt-8 overflow-hidden">
                             <img
                                 src={post.cover_url}
                                 alt={title}
-                                className="aspect-video w-full object-cover"
+                                className="object-cover w-full aspect-video"
                             />
                         </Glass>
                     )}
 
                     {content && (
-                        <div className="prose prose-invert mt-10 max-w-none whitespace-pre-wrap text-ink-100">
+                        <div className="mt-10 prose whitespace-pre-wrap prose-invert max-w-none text-ink-100">
                             {content}
                         </div>
                     )}
 
                     {post.tags && post.tags.length > 0 && (
-                        <div className="mt-10 flex flex-wrap gap-2 border-t border-white/10 pt-6">
+                        <div className="flex flex-wrap gap-2 pt-6 mt-10 border-t border-white/10">
                             {post.tags.map((t) => (
                                 <span
                                     key={t}
-                                    className="rounded-md bg-brand-500/10 px-3 py-1 text-xs font-medium text-brand-200"
+                                    className="px-3 py-1 text-xs font-medium rounded-md bg-brand-500/10 text-brand-200"
                                 >
                                     #{t}
                                 </span>
@@ -97,8 +97,8 @@ export default function BlogShow({
                 </article>
 
                 {related.length > 0 && (
-                    <div className="mx-auto mt-20 max-w-5xl">
-                        <h3 className="mb-6 font-display text-xl font-bold text-white">
+                    <div className="max-w-5xl mx-auto mt-20">
+                        <h3 className="mb-6 text-xl font-bold text-white font-display">
                             {isID ? "Tulisan terkait" : "Related posts"}
                         </h3>
                         <div className="grid gap-6 sm:grid-cols-3">
@@ -111,11 +111,11 @@ export default function BlogShow({
                                         href={route("blog.show", r.slug)}
                                         className="group"
                                     >
-                                        <Glass className="h-full overflow-hidden p-0">
+                                        <Glass className="h-full p-0 overflow-hidden">
                                             {r.cover_url && (
                                                 <img
                                                     src={r.cover_url}
-                                                    className="aspect-video w-full object-cover"
+                                                    className="object-cover w-full aspect-video"
                                                 />
                                             )}
                                             <div className="p-4">

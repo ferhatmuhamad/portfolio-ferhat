@@ -40,12 +40,16 @@ class ProfileController extends Controller
             'socials' => 'nullable|array',
             'stats' => 'nullable|array',
             'avatar' => 'nullable|image|max:4096',
+            'hero_image' => 'nullable|image|max:6144',
+            'about_image' => 'nullable|image|max:6144',
             'cv' => 'nullable|file|mimes:pdf|max:8192',
         ]);
 
         $data['avatar_path'] = $this->handleUpload($request->file('avatar'), $profile->avatar_path, 'avatars');
+        $data['hero_image_path'] = $this->handleUpload($request->file('hero_image'), $profile->hero_image_path, 'profile');
+        $data['about_image_path'] = $this->handleUpload($request->file('about_image'), $profile->about_image_path, 'profile');
         $data['cv_path'] = $this->handleUpload($request->file('cv'), $profile->cv_path, 'cv');
-        unset($data['avatar'], $data['cv']);
+        unset($data['avatar'], $data['hero_image'], $data['about_image'], $data['cv']);
 
         $profile->update($data);
         return back()->with('success', 'Profile updated.');

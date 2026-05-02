@@ -1,6 +1,6 @@
 import { Link, usePage } from "@inertiajs/react";
 import { useEffect, useState } from "react";
-import { Menu, X } from "lucide-react";
+import { Download, Menu, X } from "lucide-react";
 import { cn } from "@/lib/cn";
 import { useTranslation } from "react-i18next";
 import { LanguageSwitcher } from "./LanguageSwitcher";
@@ -60,6 +60,17 @@ export function Navbar() {
 
                 <div className="flex items-center gap-2">
                     <LanguageSwitcher />
+                    {profile?.cv_url && (
+                        <a
+                            href={profile.cv_url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="hidden items-center gap-1.5 rounded-full border border-white/15 bg-white/5 px-3.5 py-1.5 text-sm font-medium text-ink-100 backdrop-blur-md transition-all hover:border-brand-400/40 hover:bg-brand-500/10 hover:text-white sm:inline-flex"
+                        >
+                            <Download size={14} />
+                            {t("hero.ctaSecondary")}
+                        </a>
+                    )}
                     <a
                         href="#contact"
                         className="hidden rounded-full bg-brand-gradient px-4 py-1.5 text-sm font-semibold text-ink-900 shadow-glow transition-all hover:shadow-glow-lg sm:inline-flex"
@@ -96,6 +107,18 @@ export function Navbar() {
                     >
                         {t("nav.hireMe")}
                     </a>
+                    {profile?.cv_url && (
+                        <a
+                            href={profile.cv_url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            onClick={() => setOpen(false)}
+                            className="mt-1 flex items-center justify-center gap-1.5 rounded-xl border border-white/15 bg-white/5 px-4 py-3 text-sm font-semibold text-white"
+                        >
+                            <Download size={14} />
+                            {t("hero.ctaSecondary")}
+                        </a>
+                    )}
                 </div>
             )}
         </header>

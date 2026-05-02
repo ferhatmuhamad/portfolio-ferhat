@@ -204,4 +204,190 @@
             transparent 80%
         );
     }
+
+    /* Drifting grid that subtly moves */
+    .grid-drift {
+        background-image:
+            linear-gradient(
+                to right,
+                rgba(255, 255, 255, 0.045) 1px,
+                transparent 1px
+            ),
+            linear-gradient(
+                to bottom,
+                rgba(255, 255, 255, 0.045) 1px,
+                transparent 1px
+            );
+        background-size: 56px 56px;
+        animation: gridDrift 32s linear infinite;
+        mask-image: radial-gradient(
+            ellipse 80% 70% at 50% 30%,
+            black 20%,
+            transparent 80%
+        );
+    }
+
+    /* Noise overlay */
+    .noise {
+        background-image: url("data:image/svg+xml;utf8,<svg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.45 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+        opacity: 0.035;
+        mix-blend-mode: overlay;
+    }
+
+    .perspective-card {
+        transform-style: preserve-3d;
+        perspective: 1000px;
+    }
+
+    .mask-fade-y {
+        mask-image: linear-gradient(
+            to bottom,
+            transparent 0%,
+            black 12%,
+            black 88%,
+            transparent 100%
+        );
+    }
+
+    .ring-glow {
+        box-shadow:
+            0 0 0 1px rgba(255, 122, 26, 0.3),
+            0 0 60px -10px rgba(255, 122, 26, 0.5),
+            0 0 120px -20px rgba(255, 209, 102, 0.4);
+    }
+
+    .animate-float-slow {
+        animation: floatSlow 9s ease-in-out infinite;
+    }
+    .animate-float-rev {
+        animation: floatRev 11s ease-in-out infinite;
+    }
+    .animate-spin-slow {
+        animation: spinSlow 30s linear infinite;
+    }
+    .animate-aurora {
+        background-size: 200% 200%;
+        animation: aurora 18s ease infinite;
+    }
+    .animate-beam {
+        animation: beam 7s ease-in-out infinite;
+    }
+    .animate-blob {
+        animation: blob 22s ease-in-out infinite;
+    }
+    .animate-marquee-y {
+        animation: marqueeY 28s linear infinite;
+    }
+    .animate-shimmer {
+        background-size: 200% 100%;
+        animation: shimmer 4s linear infinite;
+    }
+}
+
+@keyframes floatSlow {
+    0%,
+    100% {
+        transform: translate(0, 0) rotate(0deg);
+    }
+    33% {
+        transform: translate(14px, -22px) rotate(2deg);
+    }
+    66% {
+        transform: translate(-12px, 12px) rotate(-2deg);
+    }
+}
+@keyframes floatRev {
+    0%,
+    100% {
+        transform: translate(0, 0) rotate(0deg);
+    }
+    33% {
+        transform: translate(-18px, 14px) rotate(-3deg);
+    }
+    66% {
+        transform: translate(16px, -18px) rotate(3deg);
+    }
+}
+@keyframes spinSlow {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+@keyframes aurora {
+    0%,
+    100% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+}
+@keyframes beam {
+    0%,
+    100% {
+        opacity: 0.25;
+        transform: translateY(0) scaleY(1);
+    }
+    50% {
+        opacity: 0.55;
+        transform: translateY(-20px) scaleY(1.1);
+    }
+}
+@keyframes blob {
+    0%,
+    100% {
+        border-radius: 60% 40% 50% 50% / 50% 60% 40% 50%;
+        transform: translate(0, 0) rotate(0deg);
+    }
+    33% {
+        border-radius: 40% 60% 60% 40% / 60% 40% 50% 50%;
+        transform: translate(20px, -15px) rotate(15deg);
+    }
+    66% {
+        border-radius: 50% 50% 40% 60% / 40% 50% 60% 50%;
+        transform: translate(-15px, 18px) rotate(-10deg);
+    }
+}
+@keyframes gridDrift {
+    from {
+        background-position:
+            0 0,
+            0 0;
+    }
+    to {
+        background-position:
+            56px 56px,
+            56px 56px;
+    }
+}
+@keyframes marqueeY {
+    0% {
+        transform: translateY(0);
+    }
+    100% {
+        transform: translateY(-50%);
+    }
+}
+@keyframes shimmer {
+    0% {
+        background-position: -200% 0;
+    }
+    100% {
+        background-position: 200% 0;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .animate-float-slow,
+    .animate-float-rev,
+    .animate-spin-slow,
+    .animate-aurora,
+    .animate-beam,
+    .animate-blob,
+    .grid-drift {
+        animation: none !important;
+    }
 }

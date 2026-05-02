@@ -3,6 +3,7 @@ import { Head, usePage } from "@inertiajs/react";
 import { Navbar } from "@/Components/Public/Navbar";
 import { Footer } from "@/Components/Public/Footer";
 import { FloatingWhatsApp } from "@/Components/Public/FloatingWhatsApp";
+import { BackgroundFx } from "@/Components/Public/BackgroundFx";
 import { useLenis } from "@/lib/useLenis";
 import type { PageProps } from "@/types";
 
@@ -39,12 +40,7 @@ export default function PublicLayout({
                 )}
             </Head>
             <div className="relative min-h-screen overflow-hidden bg-ink-950 text-ink-50">
-                {/* Ambient background glows */}
-                <div className="pointer-events-none fixed inset-0 -z-10">
-                    <div className="absolute -top-40 -left-40 h-[600px] w-[600px] rounded-full bg-brand-500/10 blur-[160px]" />
-                    <div className="absolute top-1/3 -right-40 h-[500px] w-[500px] rounded-full bg-sun-400/10 blur-[160px]" />
-                    <div className="absolute bottom-0 left-1/3 h-[400px] w-[400px] rounded-full bg-brand-700/10 blur-[140px]" />
-                </div>
+                <BackgroundFx />
                 <Navbar />
                 <main>{children}</main>
                 <Footer />

@@ -16,6 +16,9 @@
     "hero": {
         "eyebrow": "Tersedia untuk proyek baru",
         "available": "Terbuka untuk peluang",
+        "online": "Online",
+        "badge": "Portofolio · 2026",
+        "timezone": "WIB",
         "subtitle": "Front End Web Developer · WordPress · Odoo · IT Lead",
         "ctaPrimary": "Hubungi Saya",
         "ctaSecondary": "Unduh CV",
@@ -25,7 +28,8 @@
         "eyebrow": "Tentang Saya",
         "title": "Membangun pengalaman digital yang berperforma.",
         "downloadCv": "Unduh CV",
-        "letsTalk": "Mari Diskusi"
+        "letsTalk": "Mari Diskusi",
+        "chip": "Kopi & koding"
     },
     "services": {
         "eyebrow": "Yang Saya Tawarkan",
@@ -35,6 +39,7 @@
     "skills": {
         "eyebrow": "Tech Stack",
         "title": "Tools yang saya gunakan setiap hari.",
+        "toolsSuffix": "alat",
         "categories": {
             "frontend": "Front End",
             "backend": "Back End",
@@ -56,6 +61,7 @@
         "title": "Proyek unggulan.",
         "subtitle": "Sekilas website, ERP, dan aplikasi yang pernah saya kerjakan.",
         "viewAll": "Lihat Semua",
+        "featured": "Unggulan",
         "filter": {
             "all": "Semua",
             "wordpress": "WordPress",
@@ -73,7 +79,8 @@
     },
     "certifications": {
         "eyebrow": "Sertifikasi",
-        "title": "Belajar tanpa henti."
+        "title": "Belajar tanpa henti.",
+        "download": "Unduh"
     },
     "testimonials": {
         "eyebrow": "Apa Kata Mereka",
@@ -85,7 +92,14 @@
         "subtitle": "Pilih titik awal. Setiap proyek disesuaikan dengan tujuan Anda.",
         "popular": "Paling Populer",
         "from": "Mulai",
-        "custom": "Custom"
+        "custom": "Custom",
+        "period": {
+            "project": "proyek",
+            "month": "bulan",
+            "year": "tahun",
+            "hour": "jam",
+            "customQuote": "Penawaran Khusus"
+        }
     },
     "blog": {
         "eyebrow": "Blog",
@@ -113,7 +127,15 @@
     },
     "footer": {
         "rights": "Semua hak dilindungi.",
-        "made": "Dibangun dengan Laravel + React"
+        "made": "Dibangun dengan Laravel + React",
+        "cta": {
+            "badge": "Terbuka untuk peluang",
+            "title": "Punya ide proyek?",
+            "subtitle": "Mari bangun produk yang cepat, rapi, dan didesain untuk konversi. Tersedia untuk proyek freelance di mana saja.",
+            "button": "Mulai proyek"
+        },
+        "explore": "Jelajahi",
+        "getInTouch": "Hubungi saya"
     },
     "common": {
         "loading": "Memuat...",

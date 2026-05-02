@@ -7,7 +7,12 @@ import { Save, Plus, X } from "lucide-react";
 import type { ProfileShared } from "@/types";
 
 interface Props {
-    profile: ProfileShared & { avatar_path?: string; cv_path?: string };
+    profile: ProfileShared & {
+        avatar_path?: string;
+        cv_path?: string;
+        hero_image_path?: string;
+        about_image_path?: string;
+    };
 }
 
 const socialKeys = [
@@ -21,7 +26,6 @@ const socialKeys = [
 
 export default function ProfileEdit({ profile }: Props) {
     const { data, setData, post, processing, errors } = useForm({
-        _method: "PUT" as const,
         name: profile.name || "",
         headline: profile.headline || "",
         summary: profile.summary || "",
@@ -38,6 +42,8 @@ export default function ProfileEdit({ profile }: Props) {
             suffix?: string;
         }>,
         avatar: null as File | null,
+        hero_image: null as File | null,
+        about_image: null as File | null,
         cv: null as File | null,
     });
 
@@ -291,6 +297,10 @@ export default function ProfileEdit({ profile }: Props) {
                         <h3 className="font-display text-base font-semibold text-white">
                             Avatar
                         </h3>
+                        <p className="text-xs text-ink-300">
+                            Used as fallback for Hero & About when those are
+                            empty.
+                        </p>
                         <ImageUpload
                             value={profile.avatar_url || undefined}
                             onChange={(f) => setData("avatar", f)}
@@ -299,6 +309,44 @@ export default function ProfileEdit({ profile }: Props) {
                         {errors.avatar && (
                             <p className="text-xs text-red-400">
                                 {errors.avatar}
+                            </p>
+                        )}
+                    </FormCard>
+                    <FormCard>
+                        <h3 className="font-display text-base font-semibold text-white">
+                            Hero Photo
+                        </h3>
+                        <p className="text-xs text-ink-300">
+                            Shown on the public Hero section. Recommended
+                            portrait orientation (4:5).
+                        </p>
+                        <ImageUpload
+                            value={profile.hero_image_url || undefined}
+                            onChange={(f) => setData("hero_image", f)}
+                            label="Hero photo"
+                        />
+                        {errors.hero_image && (
+                            <p className="text-xs text-red-400">
+                                {errors.hero_image}
+                            </p>
+                        )}
+                    </FormCard>
+                    <FormCard>
+                        <h3 className="font-display text-base font-semibold text-white">
+                            About Photo
+                        </h3>
+                        <p className="text-xs text-ink-300">
+                            Shown on the public About section. Use a different
+                            shot for variety.
+                        </p>
+                        <ImageUpload
+                            value={profile.about_image_url || undefined}
+                            onChange={(f) => setData("about_image", f)}
+                            label="About photo"
+                        />
+                        {errors.about_image && (
+                            <p className="text-xs text-red-400">
+                                {errors.about_image}
                             </p>
                         )}
                     </FormCard>

@@ -30,7 +30,8 @@ class CertificationController extends Controller
     {
         $data = $this->validated($r);
         $data['image_path'] = $this->handleUpload($r->file('image'), null, 'certs');
-        unset($data['image']);
+        $data['file_path'] = $this->handleUpload($r->file('file'), null, 'certs');
+        unset($data['image'], $data['file']);
         Certification::create($data);
         return redirect()->route('admin.certifications.index')->with('success', 'Certification created.');
     }
@@ -38,13 +39,15 @@ class CertificationController extends Controller
     {
         $data = $this->validated($r);
         $data['image_path'] = $this->handleUpload($r->file('image'), $certification->image_path, 'certs');
-        unset($data['image']);
+        $data['file_path'] = $this->handleUpload($r->file('file'), $certification->file_path, 'certs');
+        unset($data['image'], $data['file']);
         $certification->update($data);
         return redirect()->route('admin.certifications.index')->with('success', 'Certification updated.');
     }
     public function destroy(Certification $certification)
     {
         $this->deleteFile($certification->image_path);
+        $this->deleteFile($certification->file_path);
         $certification->delete();
         return back()->with('success', 'Deleted.');
     }
@@ -56,6 +59,7 @@ class CertificationController extends Controller
             'issued_at' => 'required|date',
             'credential_url' => 'nullable|url|max:500',
             'image' => 'nullable|image|max:4096',
+            'file' => 'nullable|file|mimes:pdf,jpg,jpeg,png|max:8192',
             'order' => 'nullable|integer',
             'is_active' => 'boolean',
         ]);

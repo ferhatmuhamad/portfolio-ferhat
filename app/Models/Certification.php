@@ -12,10 +12,15 @@ class Certification extends Model
         'is_active' => 'boolean',
     ];
 
-    protected $appends = ['image_url'];
+    protected $appends = ['image_url', 'file_url'];
 
     public function getImageUrlAttribute(): ?string
     {
         return $this->image_path ? asset('storage/' . $this->image_path) : null;
+    }
+
+    public function getFileUrlAttribute(): ?string
+    {
+        return $this->file_path ? asset('storage/' . $this->file_path) : null;
     }
 }

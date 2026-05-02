@@ -16,6 +16,9 @@
     "hero": {
         "eyebrow": "Available for new projects",
         "available": "Open to opportunities",
+        "online": "Online",
+        "badge": "Portfolio · 2026",
+        "timezone": "WIB",
         "subtitle": "Front End Web Developer · WordPress · Odoo · IT Lead",
         "ctaPrimary": "Hire Me",
         "ctaSecondary": "Download CV",
@@ -25,7 +28,8 @@
         "eyebrow": "About Me",
         "title": "Crafting digital experiences that perform.",
         "downloadCv": "Download CV",
-        "letsTalk": "Let's Talk"
+        "letsTalk": "Let's Talk",
+        "chip": "Coffee & code"
     },
     "services": {
         "eyebrow": "What I Do",
@@ -35,6 +39,7 @@
     "skills": {
         "eyebrow": "Tech Stack",
         "title": "Tools I work with daily.",
+        "toolsSuffix": "tools",
         "categories": {
             "frontend": "Front End",
             "backend": "Back End",
@@ -56,6 +61,7 @@
         "title": "Featured projects.",
         "subtitle": "A glimpse of websites, ERPs, and apps I've shipped.",
         "viewAll": "View All",
+        "featured": "Featured",
         "filter": {
             "all": "All",
             "wordpress": "WordPress",
@@ -73,7 +79,8 @@
     },
     "certifications": {
         "eyebrow": "Certifications",
-        "title": "Continuous learning."
+        "title": "Continuous learning.",
+        "download": "Download"
     },
     "testimonials": {
         "eyebrow": "Kind Words",
@@ -85,7 +92,14 @@
         "subtitle": "Pick a starting point. Every project is tailored to your goals.",
         "popular": "Most Popular",
         "from": "From",
-        "custom": "Custom"
+        "custom": "Custom",
+        "period": {
+            "project": "project",
+            "month": "month",
+            "year": "year",
+            "hour": "hour",
+            "customQuote": "Custom Quote"
+        }
     },
     "blog": {
         "eyebrow": "Blog",
@@ -113,7 +127,15 @@
     },
     "footer": {
         "rights": "All rights reserved.",
-        "made": "Built with Laravel + React"
+        "made": "Built with Laravel + React",
+        "cta": {
+            "badge": "Open to opportunities",
+            "title": "Have a project in mind?",
+            "subtitle": "Let's build something fast, polished, and designed to convert. Available for freelance projects worldwide.",
+            "button": "Start a project"
+        },
+        "explore": "Explore",
+        "getInTouch": "Get in touch"
     },
     "common": {
         "loading": "Loading...",

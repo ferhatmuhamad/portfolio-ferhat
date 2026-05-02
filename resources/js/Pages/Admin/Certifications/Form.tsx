@@ -12,6 +12,7 @@ interface Cert {
     issued_at: string;
     credential_url?: string;
     image_url?: string;
+    file_url?: string;
     order?: number;
     is_active?: boolean;
 }
@@ -29,6 +30,7 @@ export default function CertForm({
         issued_at: certification?.issued_at?.slice(0, 10) || "",
         credential_url: certification?.credential_url || "",
         image: null as File | null,
+        file: null as File | null,
         order: certification?.order ?? 0,
         is_active: certification?.is_active ?? true,
     });
@@ -144,6 +146,38 @@ export default function CertForm({
                         value={certification?.image_url}
                         onChange={(f) => setData("image", f)}
                     />
+                    <div className="mt-4 space-y-2">
+                        <h4 className="text-sm font-semibold text-white">
+                            Downloadable File (PDF / Image)
+                        </h4>
+                        <p className="text-xs text-ink-300">
+                            Optional. Visitors can download this from the public
+                            Continuous Learning section.
+                        </p>
+                        {certification?.file_url && (
+                            <a
+                                href={certification.file_url}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="block truncate text-xs text-brand-300 hover:text-brand-200"
+                            >
+                                Current file →
+                            </a>
+                        )}
+                        <input
+                            type="file"
+                            accept="application/pdf,image/*"
+                            onChange={(e) =>
+                                setData("file", e.target.files?.[0] || null)
+                            }
+                            className="block w-full text-sm text-ink-100 file:mr-3 file:rounded-lg file:border-0 file:bg-brand-500/15 file:px-3 file:py-2 file:text-xs file:font-semibold file:text-brand-200 hover:file:bg-brand-500/25"
+                        />
+                        {errors.file && (
+                            <p className="text-xs text-red-400">
+                                {errors.file}
+                            </p>
+                        )}
+                    </div>
                 </FormCard>
             </form>
         </AdminLayout>
