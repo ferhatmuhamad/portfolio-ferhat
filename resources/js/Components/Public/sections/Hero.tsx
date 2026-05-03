@@ -199,10 +199,6 @@ export function Hero() {
                                 <span className="rounded-full bg-black/40 px-2 py-1 backdrop-blur-md">
                                     {t("hero.badge")}
                                 </span>
-                                <span className="flex items-center gap-1 rounded-full bg-black/40 px-2 py-1 backdrop-blur-md">
-                                    <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-emerald-400" />
-                                    {t("hero.online")}
-                                </span>
                             </div>
 
                             <div className="absolute inset-x-4 bottom-4 rounded-2xl border border-white/15 bg-black/40 px-4 py-3 backdrop-blur-xl">

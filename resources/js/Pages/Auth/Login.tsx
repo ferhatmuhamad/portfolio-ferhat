@@ -18,18 +18,18 @@ export default function Login({ status }: { status?: string }) {
     return (
         <>
             <Head title="Admin Login" />
-            <div className="relative flex min-h-screen items-center justify-center overflow-hidden bg-ink-950 px-4 py-10">
-                <div className="pointer-events-none absolute inset-0">
+            <div className="relative flex items-center justify-center min-h-screen px-4 py-10 overflow-hidden bg-ink-950">
+                <div className="absolute inset-0 pointer-events-none">
                     <div className="absolute -top-40 -left-40 h-[500px] w-[500px] rounded-full bg-brand-500/15 blur-[160px]" />
                     <div className="absolute -bottom-40 -right-40 h-[500px] w-[500px] rounded-full bg-sun-400/10 blur-[160px]" />
                 </div>
 
                 <div className="relative w-full max-w-md">
-                    <div className="mb-7 text-center">
-                        <div className="inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-brand-gradient font-display text-2xl font-bold text-ink-900 shadow-glow">
+                    <div className="text-center mb-7">
+                        <div className="inline-flex items-center justify-center text-2xl font-bold h-14 w-14 rounded-2xl bg-brand-gradient font-display text-ink-900 shadow-glow">
                             F
                         </div>
-                        <h1 className="mt-5 font-display text-3xl font-bold text-white">
+                        <h1 className="mt-5 text-3xl font-bold text-white font-display">
                             Welcome back
                         </h1>
                         <p className="mt-2 text-sm text-ink-300">
@@ -37,9 +37,9 @@ export default function Login({ status }: { status?: string }) {
                         </p>
                     </div>
 
-                    <div className="glass-card relative p-8">
+                    <div className="relative p-8 glass-card">
                         {status && (
-                            <div className="mb-4 flex items-center gap-2 rounded-xl border border-emerald-500/30 bg-emerald-500/10 p-3 text-sm text-emerald-200">
+                            <div className="flex items-center gap-2 p-3 mb-4 text-sm border rounded-xl border-emerald-500/30 bg-emerald-500/10 text-emerald-200">
                                 <ShieldCheck size={16} />
                                 {status}
                             </div>
@@ -103,14 +103,14 @@ export default function Login({ status }: { status?: string }) {
                             <button
                                 type="submit"
                                 disabled={processing}
-                                className="btn-primary w-full justify-center"
+                                className="justify-center w-full btn-primary"
                             >
                                 {processing ? "Signing in…" : "Sign in"}
                             </button>
                         </form>
                     </div>
 
-                    <p className="mt-6 text-center text-xs text-ink-300">
+                    <p className="mt-6 text-xs text-center text-ink-300">
                         Protected admin area · {new Date().getFullYear()}
                     </p>
                 </div>

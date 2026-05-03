@@ -1,6 +1,6 @@
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useTranslation } from "react-i18next";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { Section, SectionHeader } from "@/Components/ui/Section";
 
 export interface SkillItem {
@@ -9,6 +9,176 @@ export interface SkillItem {
     category: "frontend" | "backend" | "cms" | "other";
     icon?: string;
     level?: number;
+}
+
+// Map skill names (normalized) to simple-icons slugs (https://simpleicons.org)
+const slugMap: Record<string, string> = {
+    react: "react",
+    reactjs: "react",
+    next: "nextdotjs",
+    nextjs: "nextdotjs",
+    vue: "vuedotjs",
+    vuejs: "vuedotjs",
+    nuxt: "nuxtdotjs",
+    nuxtjs: "nuxtdotjs",
+    angular: "angular",
+    svelte: "svelte",
+    sveltekit: "svelte",
+    typescript: "typescript",
+    ts: "typescript",
+    javascript: "javascript",
+    js: "javascript",
+    html: "html5",
+    html5: "html5",
+    css: "css3",
+    css3: "css3",
+    sass: "sass",
+    scss: "sass",
+    tailwind: "tailwindcss",
+    tailwindcss: "tailwindcss",
+    bootstrap: "bootstrap",
+    framermotion: "framer",
+    framer: "framer",
+    gsap: "greensock",
+    threejs: "threedotjs",
+    three: "threedotjs",
+    redux: "redux",
+    vite: "vite",
+    webpack: "webpack",
+    figma: "figma",
+    storybook: "storybook",
+    php: "php",
+    laravel: "laravel",
+    livewire: "laravel",
+    inertia: "inertia",
+    inertiajs: "inertia",
+    node: "nodedotjs",
+    nodejs: "nodedotjs",
+    express: "express",
+    expressjs: "express",
+    nestjs: "nestjs",
+    nest: "nestjs",
+    python: "python",
+    django: "django",
+    flask: "flask",
+    fastapi: "fastapi",
+    java: "openjdk",
+    spring: "spring",
+    springboot: "springboot",
+    csharp: "csharp",
+    dotnet: "dotnet",
+    go: "go",
+    golang: "go",
+    rust: "rust",
+    ruby: "ruby",
+    rails: "rubyonrails",
+    rubyonrails: "rubyonrails",
+    mysql: "mysql",
+    mariadb: "mariadb",
+    postgresql: "postgresql",
+    postgres: "postgresql",
+    sqlite: "sqlite",
+    mongodb: "mongodb",
+    mongo: "mongodb",
+    redis: "redis",
+    graphql: "graphql",
+    rest: "openapiinitiative",
+    restapi: "openapiinitiative",
+    wordpress: "wordpress",
+    wp: "wordpress",
+    woocommerce: "woocommerce",
+    elementor: "elementor",
+    odoo: "odoo",
+    shopify: "shopify",
+    drupal: "drupal",
+    joomla: "joomla",
+    contentful: "contentful",
+    strapi: "strapi",
+    sanity: "sanity",
+    docker: "docker",
+    kubernetes: "kubernetes",
+    k8s: "kubernetes",
+    git: "git",
+    github: "github",
+    gitlab: "gitlab",
+    bitbucket: "bitbucket",
+    aws: "amazonwebservices",
+    amazonwebservices: "amazonwebservices",
+    gcp: "googlecloud",
+    googlecloud: "googlecloud",
+    azure: "microsoftazure",
+    microsoftazure: "microsoftazure",
+    vercel: "vercel",
+    netlify: "netlify",
+    railway: "railway",
+    cloudflare: "cloudflare",
+    nginx: "nginx",
+    apache: "apache",
+    linux: "linux",
+    ubuntu: "ubuntu",
+    bash: "gnubash",
+    shell: "gnubash",
+    vscode: "vscodium",
+    visualstudiocode: "vscodium",
+    postman: "postman",
+    jira: "jira",
+    notion: "notion",
+    slack: "slack",
+    trello: "trello",
+    photoshop: "adobephotoshop",
+    illustrator: "adobeillustrator",
+    xd: "adobexd",
+    aftereffects: "adobeaftereffects",
+    firebase: "firebase",
+    supabase: "supabase",
+    prisma: "prisma",
+    sequelize: "sequelize",
+};
+
+function normalize(s: string): string {
+    return s
+        .toLowerCase()
+        .replace(/\.js\b/g, "")
+        .replace(/\s+\d+(\.\d+)*$/g, "") // strip trailing version like "PHP 8"
+        .replace(/[^a-z0-9]/g, "");
+}
+
+function logoSlug(name: string, icon?: string): string | null {
+    // Allow override via `icon` only if it looks like a known simple-icons slug
+    if (icon) {
+        const ic = normalize(icon);
+        if (slugMap[ic]) return slugMap[ic];
+    }
+    const key = normalize(name);
+    if (slugMap[key]) return slugMap[key];
+    // Try first word (e.g. "Tailwind CSS" -> "tailwind")
+    const first = normalize(name.split(/\s+/)[0] || "");
+    return slugMap[first] || null;
+}
+
+function TechLogo({
+    name,
+    icon,
+    size = 18,
+}: {
+    name: string;
+    icon?: string;
+    size?: number;
+}) {
+    const slug = logoSlug(name, icon);
+    const [errored, setErrored] = useState(false);
+    if (!slug || errored) return null;
+    return (
+        <img
+            src={`https://cdn.simpleicons.org/${slug}/white`}
+            alt=""
+            width={size}
+            height={size}
+            loading="lazy"
+            onError={() => setErrored(true)}
+            className="inline-block opacity-90"
+        />
+    );
 }
 
 const categories: SkillItem["category"][] = [
@@ -82,10 +252,15 @@ export function Skills({ skills }: { skills: SkillItem[] }) {
                             {row1.map((s, i) => (
                                 <span
                                     key={`r1-${s.id}-${i}`}
-                                    className="group relative whitespace-nowrap rounded-full border border-white/10 bg-white/[0.04] px-5 py-2.5 text-sm font-medium text-ink-100 backdrop-blur-md transition-all hover:border-brand-400/40 hover:bg-brand-500/10 hover:text-white"
+                                    className="group relative inline-flex items-center gap-2.5 whitespace-nowrap rounded-full border border-white/10 bg-white/[0.04] px-5 py-3 text-sm font-medium text-ink-100 backdrop-blur-md transition-all hover:border-brand-400/40 hover:bg-brand-500/10 hover:text-white"
                                 >
+                                    <TechLogo
+                                        name={s.name}
+                                        icon={s.icon}
+                                        size={22}
+                                    />
                                     <span
-                                        className={`mr-2 inline-block h-1.5 w-1.5 rounded-full ${categoryDot[s.category]}`}
+                                        className={`inline-block h-1.5 w-1.5 rounded-full ${categoryDot[s.category]}`}
                                     />
                                     {s.name}
                                 </span>
@@ -100,8 +275,13 @@ export function Skills({ skills }: { skills: SkillItem[] }) {
                             {row2.map((s, i) => (
                                 <span
                                     key={`r2-${s.id}-${i}`}
-                                    className="whitespace-nowrap rounded-full border border-white/10 bg-white/[0.02] px-5 py-2.5 text-sm font-medium text-ink-200 backdrop-blur-md"
+                                    className="inline-flex items-center gap-2.5 whitespace-nowrap rounded-full border border-white/10 bg-white/[0.02] px-5 py-3 text-sm font-medium text-ink-200 backdrop-blur-md"
                                 >
+                                    <TechLogo
+                                        name={s.name}
+                                        icon={s.icon}
+                                        size={22}
+                                    />
                                     {s.name}
                                 </span>
                             ))}
@@ -142,9 +322,9 @@ export function Skills({ skills }: { skills: SkillItem[] }) {
                                 <p className="mb-5 text-xs uppercase tracking-[0.2em] text-ink-300">
                                     {items.length} {t("skills.toolsSuffix")}
                                 </p>
-                                <div className="flex flex-wrap gap-2">
+                                <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-3">
                                     {items.map((s, i) => (
-                                        <motion.span
+                                        <motion.div
                                             key={s.id}
                                             initial={{ opacity: 0, y: 10 }}
                                             whileInView={{ opacity: 1, y: 0 }}
@@ -153,11 +333,18 @@ export function Skills({ skills }: { skills: SkillItem[] }) {
                                                 duration: 0.35,
                                                 delay: 0.1 + i * 0.03,
                                             }}
-                                            whileHover={{ y: -2, scale: 1.05 }}
-                                            className="cursor-default rounded-xl border border-white/10 bg-ink-900/60 px-3 py-1.5 text-sm text-white shadow-sm transition-colors hover:border-brand-400/40 hover:bg-brand-500/15"
+                                            whileHover={{ y: -3, scale: 1.04 }}
+                                            className="flex cursor-default flex-col items-center justify-center gap-2 rounded-2xl border border-white/10 bg-ink-900/60 px-3 py-4 text-center text-xs font-medium text-white shadow-sm transition-colors hover:border-brand-400/40 hover:bg-brand-500/15"
                                         >
-                                            {s.name}
-                                        </motion.span>
+                                            <TechLogo
+                                                name={s.name}
+                                                icon={s.icon}
+                                                size={32}
+                                            />
+                                            <span className="truncate w-full">
+                                                {s.name}
+                                            </span>
+                                        </motion.div>
                                     ))}
                                 </div>
                             </motion.div>

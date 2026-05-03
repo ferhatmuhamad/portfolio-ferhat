@@ -8,7 +8,7 @@ import {
 } from "framer-motion";
 import { useTranslation } from "react-i18next";
 import { usePage } from "@inertiajs/react";
-import { MessageSquare, Sparkles, MapPin, Coffee } from "lucide-react";
+import { MessageSquare, Sparkles } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import type { PageProps } from "@/types";
 import { Section, SectionHeader } from "@/Components/ui/Section";
@@ -170,28 +170,6 @@ export function About() {
                                     className="absolute inset-x-0 top-0 h-1/2 bg-gradient-to-b from-white/10 to-transparent mix-blend-overlay"
                                 />
                             </div>
-                        </motion.div>
-
-                        {/* Floating chips */}
-                        <motion.div
-                            initial={{ opacity: 0, x: -20, y: 10 }}
-                            whileInView={{ opacity: 1, x: 0, y: 0 }}
-                            viewport={{ once: true }}
-                            transition={{ delay: 0.3, duration: 0.6 }}
-                            className="absolute -left-2 top-28 hidden items-center gap-2 rounded-full border border-white/15 bg-ink-950/70 px-3 py-2 text-xs font-medium text-white shadow-glass backdrop-blur-xl sm:inline-flex animate-float-slow"
-                        >
-                            <MapPin size={14} className="text-brand-300" />
-                            {profile?.location || "Indonesia"}
-                        </motion.div>
-                        <motion.div
-                            initial={{ opacity: 0, x: 20, y: 10 }}
-                            whileInView={{ opacity: 1, x: 0, y: 0 }}
-                            viewport={{ once: true }}
-                            transition={{ delay: 0.45, duration: 0.6 }}
-                            className="absolute -right-4 bottom-28 hidden items-center gap-2 rounded-full border border-white/15 bg-ink-950/70 px-3 py-2 text-xs font-medium text-white shadow-glass backdrop-blur-xl sm:inline-flex animate-float-rev"
-                        >
-                            <Coffee size={14} className="text-sun-400" />
-                            {t("about.chip")}
                         </motion.div>
                     </motion.div>
 
