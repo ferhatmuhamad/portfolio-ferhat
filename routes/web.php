@@ -55,6 +55,9 @@ Route::prefix('admin-ferhat')->name('admin.')->middleware(['auth', 'admin'])->gr
     Route::get('settings', [Admin\SettingController::class, 'edit'])->name('settings.edit');
     Route::post('settings', [Admin\SettingController::class, 'update'])->name('settings.update');
 
+    Route::get('change-password', [Admin\ChangePasswordController::class, 'edit'])->name('password.edit');
+    Route::patch('change-password', [Admin\ChangePasswordController::class, 'update'])->name('password.update');
+
     // Account (logged-in user) — Breeze profile editor for password change
     Route::get('account', [UserProfileController::class, 'edit'])->name('account.edit');
     Route::patch('account', [UserProfileController::class, 'update'])->name('account.update');
