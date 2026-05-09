@@ -6,7 +6,62 @@ import {
     useTransform,
 } from "framer-motion";
 import { useTranslation } from "react-i18next";
-import * as Icons from "lucide-react";
+import {
+    Sparkles,
+    Globe,
+    Code,
+    Code2,
+    Smartphone,
+    Layers,
+    Layout,
+    LayoutDashboard,
+    Database,
+    Server,
+    Cloud,
+    Cpu,
+    Palette,
+    PenTool,
+    Brush,
+    Briefcase,
+    ShoppingCart,
+    ShoppingBag,
+    Store,
+    Package,
+    BarChart,
+    BarChart2,
+    BarChart3,
+    LineChart,
+    PieChart,
+    TrendingUp,
+    Search,
+    Settings,
+    Wrench,
+    Zap,
+    Rocket,
+    Target,
+    Users,
+    User,
+    Mail,
+    MessageSquare,
+    Phone,
+    FileText,
+    Image,
+    Video,
+    Music,
+    Camera,
+    Bot,
+    Shield,
+    Lock,
+    Key,
+    Award,
+    Star,
+    Heart,
+    Lightbulb,
+    BookOpen,
+    GraduationCap,
+    ArrowUpRight,
+    type LucideIcon,
+} from "lucide-react";
 import { useRef } from "react";
 import { Section, SectionHeader } from "@/Components/ui/Section";
 
@@ -20,10 +75,68 @@ export interface ServiceItem {
     features?: string[] | null;
 }
 
+// Static icon map — keeps tree-shaking happy and prevents pulling
+// the entire lucide-react library (~500 kB) into the public bundle.
+// Add new entries here as needed.
+const ICON_MAP: Record<string, LucideIcon> = {
+    sparkles: Sparkles,
+    globe: Globe,
+    code: Code,
+    code2: Code2,
+    smartphone: Smartphone,
+    layers: Layers,
+    layout: Layout,
+    layoutdashboard: LayoutDashboard,
+    database: Database,
+    server: Server,
+    cloud: Cloud,
+    cpu: Cpu,
+    palette: Palette,
+    pentool: PenTool,
+    brush: Brush,
+    briefcase: Briefcase,
+    shoppingcart: ShoppingCart,
+    shoppingbag: ShoppingBag,
+    store: Store,
+    package: Package,
+    barchart: BarChart,
+    barchart2: BarChart2,
+    barchart3: BarChart3,
+    linechart: LineChart,
+    piechart: PieChart,
+    trendingup: TrendingUp,
+    search: Search,
+    settings: Settings,
+    wrench: Wrench,
+    zap: Zap,
+    rocket: Rocket,
+    target: Target,
+    users: Users,
+    user: User,
+    mail: Mail,
+    messagesquare: MessageSquare,
+    phone: Phone,
+    filetext: FileText,
+    image: Image,
+    video: Video,
+    music: Music,
+    camera: Camera,
+    bot: Bot,
+    shield: Shield,
+    lock: Lock,
+    key: Key,
+    award: Award,
+    star: Star,
+    heart: Heart,
+    lightbulb: Lightbulb,
+    bookopen: BookOpen,
+    graduationcap: GraduationCap,
+};
+
 function getIcon(name?: string) {
-    if (!name) return Icons.Sparkles;
-    const key = name.charAt(0).toUpperCase() + name.slice(1);
-    return (Icons as any)[key] || Icons.Sparkles;
+    if (!name) return Sparkles;
+    const key = name.toLowerCase().replace(/[-_\s]/g, "");
+    return ICON_MAP[key] || Sparkles;
 }
 
 function ServiceCard({
@@ -150,7 +263,7 @@ function ServiceCard({
                 )}
 
                 {/* Bottom corner arrow */}
-                <Icons.ArrowUpRight
+                <ArrowUpRight
                     size={18}
                     className="absolute bottom-5 right-5 text-ink-300 opacity-0 transition-all duration-300 group-hover:translate-x-1 group-hover:-translate-y-1 group-hover:text-brand-300 group-hover:opacity-100"
                 />

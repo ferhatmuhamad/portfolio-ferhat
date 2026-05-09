@@ -45,7 +45,7 @@ export function FloatingWhatsApp() {
     return (
         <div
             className={cn(
-                "fixed bottom-5 right-5 z-50 flex items-end gap-3 transition-all duration-700",
+                "fixed bottom-4 right-4 sm:bottom-5 sm:right-5 z-40 flex items-end gap-3 transition-all duration-700",
                 visible
                     ? "translate-y-0 opacity-100"
                     : "translate-y-8 opacity-0",
@@ -63,11 +63,11 @@ export function FloatingWhatsApp() {
                 href={href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group relative inline-flex h-16 w-16 items-center justify-center rounded-full bg-[#25D366] text-white shadow-glow transition-all duration-300 hover:scale-110 hover:shadow-glow-lg"
+                className="group relative inline-flex h-12 w-12 sm:h-16 sm:w-16 items-center justify-center rounded-full bg-[#25D366] text-white shadow-glow transition-all duration-300 hover:scale-110 hover:shadow-glow-lg"
                 aria-label="Chat on WhatsApp"
             >
                 <span className="absolute inset-0 rounded-full bg-[#25D366] animate-pulse-ring" />
-                <WhatsAppIcon size={38} />
+                <WhatsAppIcon size={28} />
             </a>
         </div>
     );

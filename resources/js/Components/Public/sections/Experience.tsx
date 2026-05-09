@@ -193,6 +193,8 @@ export function Experience({ items }: { items: ExperienceItem[] }) {
                                                         <img
                                                             src={exp.logo_url}
                                                             alt={exp.company}
+                                                            loading="lazy"
+                                                            decoding="async"
                                                             className="h-full w-full object-contain"
                                                         />
                                                     ) : (

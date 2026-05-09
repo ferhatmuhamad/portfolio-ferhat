@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 /**
  * Cinematic background:
@@ -9,16 +9,28 @@ import { useEffect, useRef } from "react";
  * - Mouse-follow spotlight
  * - Noise grain
  *
+ * On touch / coarse-pointer devices we render a *much* lighter version:
+ * just the base gradient + a static blob. Heavy blurs and animations
+ * destroy mobile GPU/CPU and were a major cause of the slow first paint.
+ *
  * Fixed to viewport, sits behind all content (z-index -10).
  */
 export function BackgroundFx() {
     const spotRef = useRef<HTMLDivElement>(null);
+    const [isMobile, setIsMobile] = useState(false);
 
     useEffect(() => {
+        if (typeof window === "undefined") return;
+        const mq = window.matchMedia(
+            "(pointer: coarse), (max-width: 767px)",
+        );
+        setIsMobile(mq.matches);
+    }, []);
+
+    useEffect(() => {
+        if (isMobile) return;
         const el = spotRef.current;
         if (!el) return;
-        const isCoarse = window.matchMedia("(pointer: coarse)").matches;
-        if (isCoarse) return;
 
         let raf = 0;
         let tx = window.innerWidth / 2;
@@ -44,7 +56,27 @@ export function BackgroundFx() {
             window.removeEventListener("mousemove", onMove);
             cancelAnimationFrame(raf);
         };
-    }, []);
+    }, [isMobile]);
+
+    if (isMobile) {
+        // Lightweight mobile background — no animations, no big blurs
+        return (
+            <div
+                aria-hidden
+                className="pointer-events-none fixed inset-0 -z-10 overflow-hidden"
+            >
+                <div className="absolute inset-0 bg-gradient-to-b from-ink-950 via-ink-900 to-ink-950" />
+                <div
+                    className="absolute inset-x-0 top-0 h-[60vh] opacity-50"
+                    style={{
+                        backgroundImage:
+                            "radial-gradient(ellipse 70% 50% at 50% 0%, rgba(255,122,26,0.18), transparent 60%)",
+                    }}
+                />
+                <div className="absolute bottom-0 left-0 right-0 h-40 bg-gradient-to-t from-ink-950 to-transparent" />
+            </div>
+        );
+    }
 
     return (
         <div

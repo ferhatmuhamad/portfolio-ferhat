@@ -125,7 +125,7 @@ function PricingCard({
                     transformStyle: "preserve-3d",
                 }}
                 className={cn(
-                    "relative flex h-full flex-col overflow-hidden rounded-3xl border bg-gradient-to-br p-8 backdrop-blur-xl transition-shadow duration-500",
+                    "relative flex h-full flex-col overflow-hidden rounded-3xl border bg-gradient-to-br p-6 sm:p-8 backdrop-blur-xl transition-shadow duration-500",
                     plan.is_popular
                         ? "border-brand-400/40 from-brand-500/15 to-sun-500/5 shadow-glow-lg"
                         : "border-white/10 from-white/[0.05] to-white/[0.01] hover:shadow-glow",
@@ -167,7 +167,7 @@ function PricingCard({
                             ? plan.tagline_id
                             : plan.tagline}
                     </p>
-                    <div className="mt-6 flex items-baseline gap-1.5">
+                    <div className="mt-6 flex flex-wrap items-baseline gap-x-1.5 gap-y-1">
                         {plan.price && (
                             <span className="text-xs text-ink-300">
                                 {t("pricing.from")}
@@ -175,7 +175,7 @@ function PricingCard({
                         )}
                         <span
                             className={cn(
-                                "font-display text-4xl font-bold",
+                                "font-display font-bold text-2xl sm:text-3xl md:text-4xl break-all",
                                 plan.is_popular
                                     ? "text-gradient"
                                     : "text-white",
@@ -256,12 +256,12 @@ export function Pricing({ plans }: { plans: PricingPlan[] }) {
                 <motion.div
                     style={{ y: yOrb1 }}
                     aria-hidden
-                    className="pointer-events-none absolute left-1/3 top-0 h-72 w-72 rounded-full bg-brand-500/10 blur-[140px]"
+                    className="mobile-fx-hide pointer-events-none absolute left-1/3 top-0 h-72 w-72 rounded-full bg-brand-500/10 blur-[140px]"
                 />
                 <motion.div
                     style={{ y: yOrb2 }}
                     aria-hidden
-                    className="pointer-events-none absolute right-10 bottom-0 h-80 w-80 rounded-full bg-sun-500/10 blur-[140px]"
+                    className="mobile-fx-hide pointer-events-none absolute right-10 bottom-0 h-80 w-80 rounded-full bg-sun-500/10 blur-[140px]"
                 />
 
                 <SectionHeader
@@ -269,7 +269,7 @@ export function Pricing({ plans }: { plans: PricingPlan[] }) {
                     title={t("pricing.title")}
                     subtitle={t("pricing.subtitle")}
                 />
-                <div className="grid items-stretch gap-6 md:grid-cols-2 lg:grid-cols-3">
+                <div className="grid grid-cols-1 items-stretch gap-6 sm:grid-cols-2 lg:grid-cols-3">
                     {plans.map((p, i) => (
                         <PricingCard
                             key={p.id}

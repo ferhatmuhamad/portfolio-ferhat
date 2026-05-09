@@ -42,12 +42,12 @@ export function Testimonials({ items }: { items: TestimonialItem[] }) {
                 <motion.div
                     style={{ y: yOrb1 }}
                     aria-hidden
-                    className="pointer-events-none absolute -left-20 top-10 h-80 w-80 rounded-full bg-brand-500/15 blur-[140px]"
+                    className="mobile-fx-hide pointer-events-none absolute -left-20 top-10 h-80 w-80 rounded-full bg-brand-500/15 blur-[140px]"
                 />
                 <motion.div
                     style={{ y: yOrb2 }}
                     aria-hidden
-                    className="pointer-events-none absolute -right-20 bottom-0 h-72 w-72 rounded-full bg-sun-500/10 blur-[140px]"
+                    className="mobile-fx-hide pointer-events-none absolute -right-20 bottom-0 h-72 w-72 rounded-full bg-sun-500/10 blur-[140px]"
                 />
 
                 <Quote
@@ -60,7 +60,7 @@ export function Testimonials({ items }: { items: TestimonialItem[] }) {
                     title={t("testimonials.title")}
                 />
 
-                <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+                <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
                     {items.map((tt, i) => (
                         <motion.div
                             key={tt.id}
@@ -79,7 +79,7 @@ export function Testimonials({ items }: { items: TestimonialItem[] }) {
                                         "conic-gradient(from 180deg, rgba(255,122,26,0.5), rgba(255,209,102,0.4), rgba(255,122,26,0.5))",
                                 }}
                             />
-                            <div className="relative flex h-full flex-col overflow-hidden rounded-[1.6rem] border border-white/10 bg-gradient-to-br from-ink-900/80 to-ink-950/80 p-7 backdrop-blur-xl shadow-glass-lg transition-colors group-hover:border-brand-400/40">
+                            <div className="relative flex h-full flex-col overflow-hidden rounded-[1.6rem] border border-white/10 bg-gradient-to-br from-ink-900/80 to-ink-950/80 p-5 sm:p-7 backdrop-blur-xl shadow-glass-lg transition-colors group-hover:border-brand-400/40">
                                 <div
                                     aria-hidden
                                     className={`pointer-events-none absolute -right-12 -top-12 h-44 w-44 rounded-full bg-gradient-to-br ${
@@ -111,7 +111,7 @@ export function Testimonials({ items }: { items: TestimonialItem[] }) {
                                     )}
                                 </div>
 
-                                <p className="mt-5 flex-1 text-base leading-relaxed text-ink-100">
+                                <p className="mt-5 flex-1 break-words text-sm sm:text-base leading-relaxed text-ink-100">
                                     &ldquo;
                                     {i18n.language === "id" && tt.quote_id
                                         ? tt.quote_id
@@ -120,11 +120,13 @@ export function Testimonials({ items }: { items: TestimonialItem[] }) {
                                 </p>
 
                                 <div className="mt-6 flex items-center gap-3 border-t border-white/5 pt-5">
-                                    <div className="relative flex h-12 w-12 items-center justify-center overflow-hidden rounded-2xl bg-brand-gradient text-sm font-bold text-ink-900 shadow-glow">
+                                    <div className="relative flex h-12 w-12 shrink-0 items-center justify-center overflow-hidden rounded-2xl bg-brand-gradient text-sm font-bold text-ink-900 shadow-glow">
                                         {tt.avatar_url ? (
                                             <img
                                                 src={tt.avatar_url}
                                                 alt={tt.name}
+                                                loading="lazy"
+                                                decoding="async"
                                                 className="h-full w-full object-cover"
                                             />
                                         ) : (

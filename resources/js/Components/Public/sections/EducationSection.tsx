@@ -57,12 +57,12 @@ export function EducationSection({
                 <motion.div
                     style={{ y: yOrb1 }}
                     aria-hidden
-                    className="pointer-events-none absolute -left-20 top-10 h-80 w-80 rounded-full bg-sky-500/10 blur-[140px]"
+                    className="mobile-fx-hide pointer-events-none absolute -left-20 top-10 h-80 w-80 rounded-full bg-sky-500/10 blur-[140px]"
                 />
                 <motion.div
                     style={{ y: yOrb2 }}
                     aria-hidden
-                    className="pointer-events-none absolute -right-20 bottom-10 h-72 w-72 rounded-full bg-brand-500/10 blur-[140px]"
+                    className="mobile-fx-hide pointer-events-none absolute -right-20 bottom-10 h-72 w-72 rounded-full bg-brand-500/10 blur-[140px]"
                 />
 
                 <SectionHeader
@@ -84,11 +84,11 @@ export function EducationSection({
                             </div>
 
                             {/* Vertical rail */}
-                            <div className="relative pl-8">
-                                <div className="absolute left-3 top-2 h-full w-px bg-white/10" />
+                            <div className="relative pl-6 sm:pl-8">
+                                <div className="absolute left-2 sm:left-3 top-2 h-full w-px bg-white/10" />
                                 <motion.div
                                     style={{ height: lineH }}
-                                    className="absolute left-3 top-2 w-px bg-gradient-to-b from-brand-400 via-sun-400 to-brand-600"
+                                    className="absolute left-2 sm:left-3 top-2 w-px bg-gradient-to-b from-brand-400 via-sun-400 to-brand-600"
                                 />
 
                                 <div className="space-y-6">
@@ -108,17 +108,17 @@ export function EducationSection({
                                             className="relative"
                                         >
                                             {/* Dot */}
-                                            <span className="absolute -left-[1.45rem] top-2 flex h-5 w-5 items-center justify-center">
+                                            <span className="absolute -left-[1.2rem] sm:-left-[1.45rem] top-2 flex h-5 w-5 items-center justify-center">
                                                 <span className="absolute inline-flex h-5 w-5 animate-ping rounded-full bg-brand-400/40" />
                                                 <span className="relative inline-flex h-3 w-3 rounded-full bg-brand-gradient shadow-glow" />
                                             </span>
 
-                                            <div className="group relative overflow-hidden rounded-2xl border border-white/10 bg-white/[0.04] p-6 backdrop-blur-xl transition-all hover:-translate-y-1 hover:border-brand-400/30 hover:shadow-glow">
+                                            <div className="group relative overflow-hidden rounded-2xl border border-white/10 bg-white/[0.04] p-5 sm:p-6 backdrop-blur-xl transition-all hover:-translate-y-1 hover:border-brand-400/30 hover:shadow-glow">
                                                 <div
                                                     aria-hidden
                                                     className="pointer-events-none absolute -top-12 -right-12 h-40 w-40 rounded-full bg-brand-500/10 blur-3xl opacity-0 transition-opacity duration-500 group-hover:opacity-100"
                                                 />
-                                                <div className="flex items-center gap-2 text-xs font-mono uppercase tracking-wider text-brand-300">
+                                                <div className="flex flex-wrap items-center gap-2 text-[11px] sm:text-xs font-mono uppercase tracking-wider text-brand-300">
                                                     <Calendar size={12} />
                                                     {formatDateRange(
                                                         e.start_date,
@@ -126,7 +126,7 @@ export function EducationSection({
                                                         i18n.language,
                                                     )}
                                                 </div>
-                                                <h4 className="mt-3 font-display text-xl font-semibold text-white">
+                                                <h4 className="mt-3 break-words font-display text-lg sm:text-xl font-semibold text-white">
                                                     {e.institution}
                                                 </h4>
                                                 {e.degree && (
@@ -197,6 +197,8 @@ export function EducationSection({
                                                 <img
                                                     src={c.image_url}
                                                     alt={c.title}
+                                                    loading="lazy"
+                                                    decoding="async"
                                                     className="h-full w-full object-cover"
                                                 />
                                             ) : (

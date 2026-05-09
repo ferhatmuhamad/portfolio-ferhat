@@ -5,6 +5,14 @@ let lenisInstance: Lenis | null = null;
 
 export function useLenis() {
     useEffect(() => {
+        // Skip Lenis on touch devices: native momentum scroll is faster,
+        // smoother, and free on the CPU. Lenis on mobile is a perf killer.
+        if (typeof window === "undefined") return;
+        const isCoarse = window.matchMedia("(pointer: coarse)").matches;
+        const reduced = window.matchMedia(
+            "(prefers-reduced-motion: reduce)",
+        ).matches;
+        if (isCoarse || reduced) return;
         if (lenisInstance) return;
         const lenis = new Lenis({
             duration: 1.1,

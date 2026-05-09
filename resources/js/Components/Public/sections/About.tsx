@@ -134,6 +134,8 @@ export function About() {
                                     <img
                                         src={aboutImage}
                                         alt={profile?.name || "About"}
+                                        loading="lazy"
+                                        decoding="async"
                                         className="h-full w-full object-cover"
                                     />
                                 ) : (

@@ -1,7 +1,47 @@
 import AdminLayout from "@/Layouts/AdminLayout";
 import { Link } from "@inertiajs/react";
-import * as Icons from "lucide-react";
+import {
+    Sparkles,
+    Briefcase,
+    FileText,
+    Image as ImageIcon,
+    MessageSquare,
+    Mail,
+    Star,
+    Award,
+    Users,
+    BookOpen,
+    GraduationCap,
+    Code,
+    Layers,
+    Globe,
+    Settings,
+    BarChart3,
+    FolderPlus,
+    FilePlus,
+    User,
+    type LucideIcon,
+} from "lucide-react";
 import { formatDate } from "@/lib/format";
+
+const ADMIN_ICON_MAP: Record<string, LucideIcon> = {
+    Sparkles,
+    Briefcase,
+    FileText,
+    Image: ImageIcon,
+    MessageSquare,
+    Mail,
+    Star,
+    Award,
+    Users,
+    BookOpen,
+    GraduationCap,
+    Code,
+    Layers,
+    Globe,
+    Settings,
+    BarChart3,
+};
 
 interface Stat {
     label: string;
@@ -30,7 +70,7 @@ export default function Dashboard({ stats, recentMessages }: Props) {
         >
             <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-5">
                 {stats.map((s) => {
-                    const Icon = (Icons as any)[s.icon] || Icons.Sparkles;
+                    const Icon = ADMIN_ICON_MAP[s.icon] || Sparkles;
                     return (
                         <div
                             key={s.label}
@@ -112,22 +152,22 @@ export default function Dashboard({ stats, recentMessages }: Props) {
                         <QuickAction
                             href="/admin-ferhat/projects/create"
                             label="New Project"
-                            icon={Icons.FolderPlus}
+                            icon={FolderPlus}
                         />
                         <QuickAction
                             href="/admin-ferhat/posts/create"
                             label="New Post"
-                            icon={Icons.FilePlus}
+                            icon={FilePlus}
                         />
                         <QuickAction
                             href="/admin-ferhat/profile"
                             label="Edit Profile"
-                            icon={Icons.User}
+                            icon={User}
                         />
                         <QuickAction
                             href="/admin-ferhat/settings"
                             label="Settings"
-                            icon={Icons.Settings}
+                            icon={Settings}
                         />
                     </div>
                 </div>

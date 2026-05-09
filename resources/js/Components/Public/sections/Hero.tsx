@@ -179,6 +179,8 @@ export function Hero() {
                                 <img
                                     src={heroImage}
                                     alt={profile?.name || "Portrait"}
+                                    fetchPriority="high"
+                                    decoding="async"
                                     className="h-full w-full object-cover"
                                 />
                             ) : (
