@@ -21,6 +21,13 @@
 
 <body class="font-sans antialiased bg-ink-900 text-ink-100">
     @inertia
+    <noscript>
+        <div style="padding:24px;color:#f1f1f5;background:#0a0a10;font-family:sans-serif;text-align:center">
+            JavaScript dinonaktifkan atau browser Anda tidak didukung. Silakan
+            gunakan browser modern (Chrome / Safari versi terbaru) untuk membuka
+            situs ini.
+        </div>
+    </noscript>
 </body>
 
 </html>
