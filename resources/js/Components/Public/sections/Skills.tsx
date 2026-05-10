@@ -1,6 +1,19 @@
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useTranslation } from "react-i18next";
 import { useRef, useState } from "react";
+import {
+    CreditCard,
+    Gauge,
+    GraduationCap,
+    Server,
+    ServerCog,
+    Smartphone,
+    Database,
+    Cloud,
+    Cpu,
+    Wrench,
+    type LucideIcon,
+} from "lucide-react";
 import { Section, SectionHeader } from "@/Components/ui/Section";
 
 export interface SkillItem {
@@ -19,8 +32,8 @@ const slugMap: Record<string, string> = {
     nextjs: "nextdotjs",
     vue: "vuedotjs",
     vuejs: "vuedotjs",
-    nuxt: "nuxtdotjs",
-    nuxtjs: "nuxtdotjs",
+    nuxt: "nuxt",
+    nuxtjs: "nuxt",
     angular: "angular",
     svelte: "svelte",
     sveltekit: "svelte",
@@ -92,6 +105,7 @@ const slugMap: Record<string, string> = {
     shopify: "shopify",
     drupal: "drupal",
     joomla: "joomla",
+    moodle: "moodle",
     contentful: "contentful",
     strapi: "strapi",
     sanity: "sanity",
@@ -121,6 +135,7 @@ const slugMap: Record<string, string> = {
     vscode: "vscodium",
     visualstudiocode: "vscodium",
     postman: "postman",
+    tableplus: "tableplus",
     jira: "jira",
     notion: "notion",
     slack: "slack",
@@ -134,6 +149,31 @@ const slugMap: Record<string, string> = {
     prisma: "prisma",
     sequelize: "sequelize",
 };
+
+// Slugs whose source SVG has tight bounds and look too small at default size.
+// Render them scaled up so they read at the same visual weight as siblings.
+const upscaleSlugs = new Set(["odoo", "woocommerce", "moodle", "tableplus"]);
+
+// Lucide-icon fallbacks for skills that don't have a real brand logo
+// (e.g. "Server Admin (SSH/FTP)", "PWA", "Core Web Vitals").
+// Matched by substring against the lowercased name.
+const lucideFallbacks: Array<{ match: RegExp; icon: LucideIcon }> = [
+    { match: /core\s*web\s*vitals|performance|lighthouse|web\s*vitals/, icon: Gauge },
+    { match: /pwa|progressive\s*web/, icon: Smartphone },
+    { match: /payment\s*gateway|midtrans|stripe|xendit/, icon: CreditCard },
+    { match: /vps|deployment|deploy|hosting/, icon: Cloud },
+    { match: /server\s*admin|ssh|ftp|sftp|cpanel/, icon: ServerCog },
+    { match: /server/, icon: Server },
+    { match: /lms|learning|moodle/, icon: GraduationCap },
+    { match: /database|tableplus|dbeaver|sql\s*client/, icon: Database },
+    { match: /api|rest|graphql/, icon: Cpu },
+];
+
+function lucideFallback(name: string): LucideIcon | null {
+    const n = name.toLowerCase();
+    for (const f of lucideFallbacks) if (f.match.test(n)) return f.icon;
+    return null;
+}
 
 function normalize(s: string): string {
     return s
@@ -167,16 +207,36 @@ function TechLogo({
 }) {
     const slug = logoSlug(name, icon);
     const [errored, setErrored] = useState(false);
-    if (!slug || errored) return null;
+
+    // 1) Try a brand logo from simple-icons
+    if (slug && !errored) {
+        const scale = upscaleSlugs.has(slug) ? 1.4 : 1;
+        return (
+            <img
+                src={`https://cdn.simpleicons.org/${slug}/white`}
+                alt=""
+                width={size}
+                height={size}
+                loading="lazy"
+                onError={() => setErrored(true)}
+                style={
+                    scale !== 1
+                        ? { transform: `scale(${scale})`, transformOrigin: "center" }
+                        : undefined
+                }
+                className="inline-block opacity-90"
+            />
+        );
+    }
+
+    // 2) Fall back to a representative Lucide icon based on the skill name
+    const Fallback = lucideFallback(name) || Wrench;
     return (
-        <img
-            src={`https://cdn.simpleicons.org/${slug}/white`}
-            alt=""
-            width={size}
-            height={size}
-            loading="lazy"
-            onError={() => setErrored(true)}
-            className="inline-block opacity-90"
+        <Fallback
+            size={size}
+            strokeWidth={1.6}
+            className="inline-block text-brand-200/90"
+            aria-hidden
         />
     );
 }
