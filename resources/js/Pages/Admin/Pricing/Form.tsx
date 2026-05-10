@@ -18,6 +18,7 @@ interface Plan {
     tagline?: string;
     tagline_id?: string;
     price: number | null;
+    price_usd?: number | null;
     currency: string;
     billing_period?: string;
     features?: string[] | null;
@@ -37,6 +38,7 @@ export default function PricingForm({ plan }: { plan: Plan | null }) {
         tagline: plan?.tagline || "",
         tagline_id: plan?.tagline_id || "",
         price: plan?.price ?? null,
+        price_usd: plan?.price_usd ?? null,
         currency: plan?.currency || "IDR",
         billing_period: plan?.billing_period || "project",
         features: (plan?.features || []) as string[],
@@ -111,7 +113,10 @@ export default function PricingForm({ plan }: { plan: Plan | null }) {
                         </Field>
                     </div>
                     <div className="grid gap-4 sm:grid-cols-3">
-                        <Field label="Price" hint="Empty = Custom">
+                        <Field
+                            label="Price (base)"
+                            hint="Empty = Custom. In the currency below."
+                        >
                             <Input
                                 type="number"
                                 step="0.01"
@@ -119,6 +124,24 @@ export default function PricingForm({ plan }: { plan: Plan | null }) {
                                 onChange={(e) =>
                                     setData(
                                         "price",
+                                        e.target.value === ""
+                                            ? null
+                                            : Number(e.target.value),
+                                    )
+                                }
+                            />
+                        </Field>
+                        <Field
+                            label="Price (USD override)"
+                            hint="Optional. Used when visitor toggles to USD."
+                        >
+                            <Input
+                                type="number"
+                                step="0.01"
+                                value={data.price_usd ?? ""}
+                                onChange={(e) =>
+                                    setData(
+                                        "price_usd",
                                         e.target.value === ""
                                             ? null
                                             : Number(e.target.value),
@@ -135,13 +158,26 @@ export default function PricingForm({ plan }: { plan: Plan | null }) {
                                 required
                             />
                         </Field>
-                        <Field label="Billing Period">
-                            <Input
+                        <Field
+                            label="Billing Period"
+                            hint="Use 'hour' or 'jam' to show in the Per Hour tab"
+                        >
+                            <select
                                 value={data.billing_period}
                                 onChange={(e) =>
                                     setData("billing_period", e.target.value)
                                 }
-                            />
+                                className="w-full rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-sm text-ink-100 outline-none transition focus:border-brand-400 focus:bg-white/10"
+                            >
+                                <option value="project">project</option>
+                                <option value="hour">hour</option>
+                                <option value="jam">jam</option>
+                                <option value="month">month</option>
+                                <option value="bulan">bulan</option>
+                                <option value="year">year</option>
+                                <option value="tahun">tahun</option>
+                                <option value="custom">custom</option>
+                            </select>
                         </Field>
                     </div>
                     <StringListInput

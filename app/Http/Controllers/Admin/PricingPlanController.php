@@ -44,6 +44,7 @@ class PricingPlanController extends Controller
             'tagline' => 'nullable|string|max:200',
             'tagline_id' => 'nullable|string|max:200',
             'price' => 'nullable|numeric|min:0',
+            'price_usd' => 'nullable|numeric|min:0',
             'currency' => 'required|string|max:8',
             'billing_period' => 'nullable|string|max:60',
             'features' => 'nullable|array',

@@ -303,10 +303,14 @@ export function Pricing({ plans }: { plans: PricingPlan[] }) {
         [plans],
     );
 
-    // Hour tab uses a fixed pair of cards (hourly + custom). DB-defined hour
-    // plans are intentionally ignored here so the layout stays as two wide
-    // cards spanning the full row.
-    const hourPlans: PricingPlan[] = useMemo(
+    // Hour tab: use admin-managed plans (billing_period = "hour" or "jam")
+    // when present. Falls back to a curated default pair (Hourly + Custom)
+    // so the section is never empty before the admin sets things up.
+    const hourPlansFromDb = useMemo(
+        () => plans?.filter(isHourPlan) || [],
+        [plans],
+    );
+    const defaultHourPlans: PricingPlan[] = useMemo(
         () => [
             {
                 id: -1,
@@ -363,6 +367,9 @@ export function Pricing({ plans }: { plans: PricingPlan[] }) {
         ],
         [],
     );
+    const hourPlans = hourPlansFromDb.length
+        ? hourPlansFromDb
+        : defaultHourPlans;
 
     const [tab, setTab] = useState<"project" | "hour">(
         projectPlans.length ? "project" : "hour",
@@ -479,9 +486,13 @@ export function Pricing({ plans }: { plans: PricingPlan[] }) {
                     <div
                         key={tab + currency}
                         className={cn(
-                            "grid grid-cols-1 items-stretch gap-6",
+                            "mx-auto grid grid-cols-1 items-stretch gap-6",
                             tab === "hour"
-                                ? "md:grid-cols-2"
+                                ? visiblePlans.length === 1
+                                    ? "max-w-md"
+                                    : visiblePlans.length === 2
+                                      ? "max-w-4xl md:grid-cols-2"
+                                      : "sm:grid-cols-2 lg:grid-cols-3"
                                 : "sm:grid-cols-2 lg:grid-cols-3",
                         )}
                     >
