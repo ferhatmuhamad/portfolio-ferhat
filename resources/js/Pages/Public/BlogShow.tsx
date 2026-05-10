@@ -53,7 +53,7 @@ export default function BlogShow({
                 ],
             }}
         >
-            <Section className="!pt-0">
+            <Section className="!pt-16 md:!pt-20">
                 <article className="max-w-3xl mx-auto">
                     <div className="flex items-center gap-3 text-xs text-ink-400">
                         {post.published_at && (

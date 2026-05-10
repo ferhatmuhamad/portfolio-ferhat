@@ -14,77 +14,107 @@ interface DetailHeroProps {
 }
 
 /**
- * Modern hero band for detail pages — shows a small breadcrumb and a large
- * gradient title. Decorative orbs match the brand styling.
+ * Bold brand-gradient hero band for detail pages — orange/sun gradient
+ * background with black title text, breadcrumb, eyebrow chip, and a soft
+ * decorative pattern. Includes a curved bottom edge for a modern feel.
  */
 export function DetailHero({ eyebrow, title, breadcrumbs }: DetailHeroProps) {
     return (
-        <section className="relative overflow-x-clip pb-12 pt-28 sm:pb-16 sm:pt-32">
-            {/* Decorative orbs */}
-            <div
-                aria-hidden
-                className="pointer-events-none absolute -top-10 left-1/4 -z-10 h-72 w-72 rounded-full bg-brand-500/15 blur-[140px]"
-            />
-            <div
-                aria-hidden
-                className="pointer-events-none absolute -top-16 right-1/4 -z-10 h-72 w-72 rounded-full bg-sun-400/10 blur-[140px]"
-            />
-            <div
-                aria-hidden
-                className="pointer-events-none absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent"
-            />
+        <section className="relative overflow-hidden pt-24 sm:pt-28">
+            {/* Brand gradient background */}
+            <div className="relative bg-brand-gradient">
+                {/* Subtle dotted overlay for texture */}
+                <div
+                    aria-hidden
+                    className="pointer-events-none absolute inset-0 opacity-[0.18] mix-blend-multiply"
+                    style={{
+                        backgroundImage:
+                            "radial-gradient(circle at 1px 1px, rgba(0,0,0,0.6) 1px, transparent 0)",
+                        backgroundSize: "22px 22px",
+                    }}
+                />
+                {/* Warm glow blob top-right */}
+                <div
+                    aria-hidden
+                    className="pointer-events-none absolute -top-20 right-[-10%] h-80 w-80 rounded-full bg-sun-300/60 blur-[120px]"
+                />
+                {/* Deep amber blob bottom-left */}
+                <div
+                    aria-hidden
+                    className="pointer-events-none absolute -bottom-24 left-[-8%] h-80 w-80 rounded-full bg-brand-700/40 blur-[120px]"
+                />
+                {/* Top hairline */}
+                <div
+                    aria-hidden
+                    className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-black/20 to-transparent"
+                />
 
-            <div className="container relative">
-                {/* Breadcrumb */}
-                <nav
-                    aria-label="Breadcrumb"
-                    className="flex flex-wrap items-center gap-1.5 text-xs text-ink-300"
+                <div className="container relative py-14 sm:py-20 md:py-24">
+                    {/* Breadcrumb */}
+                    <nav
+                        aria-label="Breadcrumb"
+                        className="flex flex-wrap items-center gap-1.5 text-xs font-medium text-ink-900/80"
+                    >
+                        {breadcrumbs.map((crumb, i) => {
+                            const isLast = i === breadcrumbs.length - 1;
+                            return (
+                                <span
+                                    key={`${crumb.label}-${i}`}
+                                    className="inline-flex items-center gap-1.5"
+                                >
+                                    {i > 0 && (
+                                        <ChevronRight
+                                            size={12}
+                                            className="text-ink-900/50"
+                                        />
+                                    )}
+                                    {crumb.href && !isLast ? (
+                                        <Link
+                                            href={crumb.href}
+                                            className="rounded-md px-1.5 py-0.5 transition-colors hover:bg-ink-900/10 hover:text-ink-900"
+                                        >
+                                            {crumb.label}
+                                        </Link>
+                                    ) : (
+                                        <span
+                                            className={
+                                                isLast
+                                                    ? "max-w-[60vw] truncate rounded-md bg-ink-900/10 px-2 py-0.5 font-semibold text-ink-900"
+                                                    : "rounded-md px-1.5 py-0.5"
+                                            }
+                                        >
+                                            {crumb.label}
+                                        </span>
+                                    )}
+                                </span>
+                            );
+                        })}
+                    </nav>
+
+                    {eyebrow && (
+                        <span className="mt-6 inline-flex items-center gap-2 rounded-full border border-ink-900/20 bg-ink-900/10 px-3 py-1 text-[11px] font-bold uppercase tracking-[0.2em] text-ink-900 backdrop-blur-sm">
+                            <span className="h-1.5 w-1.5 rounded-full bg-ink-900" />
+                            {eyebrow}
+                        </span>
+                    )}
+
+                    <h1 className="mt-4 max-w-4xl font-display text-3xl font-extrabold leading-[1.05] tracking-tight text-ink-950 drop-shadow-[0_1px_0_rgba(255,255,255,0.25)] sm:text-4xl md:text-5xl lg:text-6xl">
+                        {title}
+                    </h1>
+                </div>
+
+                {/* Curved bottom edge transitioning back to dark theme */}
+                <svg
+                    aria-hidden
+                    className="block h-10 w-full text-ink-950 sm:h-14"
+                    viewBox="0 0 1440 80"
+                    preserveAspectRatio="none"
                 >
-                    {breadcrumbs.map((crumb, i) => {
-                        const isLast = i === breadcrumbs.length - 1;
-                        return (
-                            <span
-                                key={`${crumb.label}-${i}`}
-                                className="inline-flex items-center gap-1.5"
-                            >
-                                {i > 0 && (
-                                    <ChevronRight
-                                        size={12}
-                                        className="text-ink-500"
-                                    />
-                                )}
-                                {crumb.href && !isLast ? (
-                                    <Link
-                                        href={crumb.href}
-                                        className="rounded-md px-1.5 py-0.5 transition-colors hover:bg-white/5 hover:text-brand-300"
-                                    >
-                                        {crumb.label}
-                                    </Link>
-                                ) : (
-                                    <span
-                                        className={
-                                            isLast
-                                                ? "max-w-[60vw] truncate rounded-md px-1.5 py-0.5 text-brand-300"
-                                                : "rounded-md px-1.5 py-0.5"
-                                        }
-                                    >
-                                        {crumb.label}
-                                    </span>
-                                )}
-                            </span>
-                        );
-                    })}
-                </nav>
-
-                {eyebrow && (
-                    <span className="mt-5 inline-block text-xs font-bold uppercase tracking-[0.25em] text-brand-400">
-                        {eyebrow}
-                    </span>
-                )}
-
-                <h1 className="mt-3 max-w-4xl font-display text-3xl font-bold leading-[1.1] text-white sm:text-4xl md:text-5xl lg:text-6xl">
-                    {title}
-                </h1>
+                    <path
+                        d="M0,0 C360,80 1080,80 1440,0 L1440,80 L0,80 Z"
+                        fill="currentColor"
+                    />
+                </svg>
             </div>
         </section>
     );

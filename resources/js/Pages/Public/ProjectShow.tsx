@@ -68,7 +68,7 @@ export default function ProjectShow({
                 ],
             }}
         >
-            <section className="relative pb-24 md:pb-32">
+            <section className="relative pb-24 pt-16 md:pb-32 md:pt-20">
                 <div className="container">
                     <div className="grid gap-10 lg:grid-cols-3">
                         <div className="lg:col-span-2">
