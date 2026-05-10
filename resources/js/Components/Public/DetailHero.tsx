@@ -20,7 +20,7 @@ interface DetailHeroProps {
  */
 export function DetailHero({ eyebrow, title, breadcrumbs }: DetailHeroProps) {
     return (
-        <section className="relative overflow-hidden pt-24 sm:pt-28">
+        <section className="relative overflow-hidden">
             {/* Brand gradient background */}
             <div className="relative bg-brand-gradient">
                 {/* Subtle dotted overlay for texture */}
@@ -49,7 +49,7 @@ export function DetailHero({ eyebrow, title, breadcrumbs }: DetailHeroProps) {
                     className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-black/20 to-transparent"
                 />
 
-                <div className="container relative py-14 sm:py-20 md:py-24">
+                <div className="container relative pb-16 pt-28 sm:pb-20 sm:pt-32 md:pb-24 md:pt-36">
                     {/* Breadcrumb */}
                     <nav
                         aria-label="Breadcrumb"
@@ -103,18 +103,11 @@ export function DetailHero({ eyebrow, title, breadcrumbs }: DetailHeroProps) {
                     </h1>
                 </div>
 
-                {/* Curved bottom edge transitioning back to dark theme */}
-                <svg
+                {/* Soft gradient fade to dark page background */}
+                <div
                     aria-hidden
-                    className="block h-10 w-full text-ink-950 sm:h-14"
-                    viewBox="0 0 1440 80"
-                    preserveAspectRatio="none"
-                >
-                    <path
-                        d="M0,0 C360,80 1080,80 1440,0 L1440,80 L0,80 Z"
-                        fill="currentColor"
-                    />
-                </svg>
+                    className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-gradient-to-b from-transparent to-ink-950 sm:h-32"
+                />
             </div>
         </section>
     );
