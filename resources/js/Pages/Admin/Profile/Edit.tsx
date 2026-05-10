@@ -30,6 +30,8 @@ export default function ProfileEdit({ profile }: Props) {
         headline: profile.headline || "",
         summary: profile.summary || "",
         summary_id: profile.summary_id || "",
+        footer_tagline: profile.footer_tagline || "",
+        footer_tagline_id: profile.footer_tagline_id || "",
         email: profile.email || "",
         phone: profile.phone || "",
         whatsapp: profile.whatsapp || "",
@@ -164,6 +166,39 @@ export default function ProfileEdit({ profile }: Props) {
                                 }
                             />
                         </Field>
+                        <div className="grid gap-4 sm:grid-cols-2">
+                            <Field
+                                label="Footer tagline (English)"
+                                hint="Short one-liner shown under your name in the footer."
+                                error={errors.footer_tagline}
+                            >
+                                <Textarea
+                                    rows={2}
+                                    value={data.footer_tagline}
+                                    onChange={(e) =>
+                                        setData(
+                                            "footer_tagline",
+                                            e.target.value,
+                                        )
+                                    }
+                                />
+                            </Field>
+                            <Field
+                                label="Footer tagline (Bahasa Indonesia)"
+                                error={errors.footer_tagline_id}
+                            >
+                                <Textarea
+                                    rows={2}
+                                    value={data.footer_tagline_id}
+                                    onChange={(e) =>
+                                        setData(
+                                            "footer_tagline_id",
+                                            e.target.value,
+                                        )
+                                    }
+                                />
+                            </Field>
+                        </div>
                         <div className="grid gap-4 sm:grid-cols-3">
                             <Field label="Phone">
                                 <Input

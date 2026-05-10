@@ -33,6 +33,8 @@ class ProfileController extends Controller
             'headline' => 'required|string|max:200',
             'summary' => 'required|string',
             'summary_id' => 'nullable|string',
+            'footer_tagline' => 'nullable|string|max:280',
+            'footer_tagline_id' => 'nullable|string|max:280',
             'email' => 'required|email|max:160',
             'phone' => 'nullable|string|max:40',
             'whatsapp' => 'nullable|string|max:30',

@@ -19,7 +19,10 @@ export function Footer() {
     const year = new Date().getFullYear();
 
     const isID = locale === "id";
-    const summary =
+    const tagline =
+        (isID && profile?.footer_tagline_id
+            ? profile.footer_tagline_id
+            : profile?.footer_tagline) ||
         (isID && profile?.summary_id ? profile.summary_id : profile?.summary) ||
         profile?.headline ||
         "";
@@ -117,7 +120,7 @@ export function Footer() {
                             </div>
                         </div>
                         <p className="mt-5 max-w-sm text-sm leading-relaxed text-ink-300">
-                            {summary}
+                            {tagline}
                         </p>
                         <div className="mt-6 flex gap-2.5">
                             {profile?.socials?.github && (

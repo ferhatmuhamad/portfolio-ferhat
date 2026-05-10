@@ -20,6 +20,8 @@ export interface ProfileShared {
     headline: string;
     summary: string;
     summary_id?: string | null;
+    footer_tagline?: string | null;
+    footer_tagline_id?: string | null;
     email: string;
     phone?: string | null;
     whatsapp?: string | null;
