@@ -31,7 +31,7 @@ class PublicController extends Controller
             'experiences' => Experience::where('is_active', true)->orderByDesc('start_date')->get(),
             'educations' => Education::where('is_active', true)->orderByDesc('start_date')->get(),
             'certifications' => Certification::where('is_active', true)->orderByDesc('issued_at')->get(),
-            'projects' => Project::where('is_active', true)->orderByDesc('is_featured')->orderByDesc('completed_at')->get(),
+            'projects' => Project::where('is_active', true)->orderBy('order')->orderByDesc('is_featured')->orderByDesc('completed_at')->get(),
             'testimonials' => (bool) Setting::get('show_testimonials', true)
                 ? Testimonial::where('is_active', true)->orderBy('order')->get()
                 : collect(),
