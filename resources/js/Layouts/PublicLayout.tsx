@@ -39,7 +39,7 @@ export default function PublicLayout({
                     <meta property="og:image" content={profile.avatar_url} />
                 )}
             </Head>
-            <div className="relative min-h-screen overflow-hidden bg-ink-950 text-ink-50">
+            <div className="relative min-h-screen overflow-x-clip bg-ink-950 text-ink-50">
                 <BackgroundFx />
                 <Navbar />
                 <main>{children}</main>
