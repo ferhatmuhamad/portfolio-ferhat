@@ -35,6 +35,11 @@ function displayPrice(
     if (plan.price == null) return null;
     const baseCurrency = (plan.currency || "IDR").toUpperCase();
     if (currency === "USD") {
+        // Honor an explicit USD override when provided (used for synthetic
+        // plans that need a curated USD price rather than a conversion).
+        if (typeof plan.price_usd === "number") {
+            return formatCurrency(plan.price_usd, "USD", "en-US");
+        }
         // Treat any non-USD source as IDR for conversion purposes.
         const usd =
             baseCurrency === "USD" ? plan.price : idrToUsd(plan.price);
@@ -55,6 +60,7 @@ export interface PricingPlan {
     tagline?: string;
     tagline_id?: string;
     price: number | null;
+    price_usd?: number;
     currency?: string;
     billing_period?: string;
     features?: string[] | null;
@@ -296,9 +302,66 @@ export function Pricing({ plans }: { plans: PricingPlan[] }) {
         () => plans?.filter((p) => !isHourPlan(p)) || [],
         [plans],
     );
-    const hourPlans = useMemo(
-        () => plans?.filter(isHourPlan) || [],
-        [plans],
+
+    // Hour tab uses a fixed pair of cards (hourly + custom). DB-defined hour
+    // plans are intentionally ignored here so the layout stays as two wide
+    // cards spanning the full row.
+    const hourPlans: PricingPlan[] = useMemo(
+        () => [
+            {
+                id: -1,
+                name: "Hourly",
+                name_id: "Per Jam",
+                tagline:
+                    "Flexible hourly engagement for tweaks, audits, bug fixes, and ad-hoc improvements on existing projects.",
+                tagline_id:
+                    "Engagement per jam yang fleksibel untuk perbaikan, audit, bug fix, dan peningkatan kecil pada project yang sudah berjalan.",
+                price: 150000,
+                price_usd: 15,
+                currency: "IDR",
+                billing_period: "hour",
+                features: [
+                    "Minimum 2 hours per session",
+                    "Live tracking and weekly summary",
+                    "Code commits & screen recordings on request",
+                    "Priority response within 24 hours",
+                ],
+                features_id: [
+                    "Minimum 2 jam per sesi",
+                    "Tracking langsung & ringkasan mingguan",
+                    "Kirim commit & rekaman layar bila diminta",
+                    "Respon prioritas dalam 24 jam",
+                ],
+                is_popular: true,
+                cta_label: "Hire Me",
+            },
+            {
+                id: -2,
+                name: "Custom",
+                name_id: "Khusus",
+                tagline:
+                    "Have a different scope, longer retainer, or special arrangement? Tell me what you need and we'll design a fair quote.",
+                tagline_id:
+                    "Punya scope berbeda, retainer panjang, atau kerja sama khusus? Ceritakan kebutuhanmu dan kita susun penawaran yang sesuai.",
+                price: null,
+                currency: "IDR",
+                billing_period: "custom",
+                features: [
+                    "Tailored to your project scope",
+                    "Discounted bundle for 20+ hours",
+                    "Dedicated communication channel",
+                    "Flexible payment milestones",
+                ],
+                features_id: [
+                    "Disesuaikan dengan kebutuhan project",
+                    "Diskon paket untuk 20+ jam",
+                    "Channel komunikasi khusus",
+                    "Pembayaran fleksibel per milestone",
+                ],
+                cta_label: "Let's Talk",
+            },
+        ],
+        [],
     );
 
     const [tab, setTab] = useState<"project" | "hour">(
@@ -331,7 +394,7 @@ export function Pricing({ plans }: { plans: PricingPlan[] }) {
                 />
 
                 {/* Controls: type tab + currency toggle */}
-                <div className="mb-10 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
+                <div className="mb-14 md:mb-20 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
                     {/* Type tab */}
                     <div
                         role="tablist"
@@ -415,7 +478,12 @@ export function Pricing({ plans }: { plans: PricingPlan[] }) {
                 {visiblePlans.length > 0 ? (
                     <div
                         key={tab + currency}
-                        className="grid grid-cols-1 items-stretch gap-6 sm:grid-cols-2 lg:grid-cols-3"
+                        className={cn(
+                            "grid grid-cols-1 items-stretch gap-6",
+                            tab === "hour"
+                                ? "md:grid-cols-2"
+                                : "sm:grid-cols-2 lg:grid-cols-3",
+                        )}
                     >
                         {visiblePlans.map((p, i) => (
                             <PricingCard
