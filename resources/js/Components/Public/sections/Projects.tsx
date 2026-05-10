@@ -5,7 +5,7 @@ import {
     useSpring,
     useTransform,
 } from "framer-motion";
-import { useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Link } from "@inertiajs/react";
 import { useTranslation } from "react-i18next";
 import { ArrowUpRight, Github, Sparkles } from "lucide-react";
@@ -30,13 +30,11 @@ function ProjectCard({
     project: p,
     index,
     isId,
-    isLarge,
     t,
 }: {
     project: ProjectItem;
     index: number;
     isId: boolean;
-    isLarge: boolean;
     t: (k: string) => string;
 }) {
     const mx = useMotionValue(0);
@@ -69,10 +67,7 @@ function ProjectCard({
             onMouseMove={onMove}
             onMouseLeave={onLeave}
             style={{ perspective: 1400 }}
-            className={cn(
-                "group relative",
-                isLarge && "md:col-span-2 lg:row-span-2",
-            )}
+            className="group relative"
         >
             <motion.div
                 style={{
@@ -98,12 +93,7 @@ function ProjectCard({
                 />
 
                 <Link href={route("projects.show", p.slug)} className="block">
-                    <div
-                        className={cn(
-                            "relative overflow-hidden bg-ink-900",
-                            isLarge ? "aspect-[16/10]" : "aspect-[16/10]",
-                        )}
-                    >
+                    <div className="relative overflow-hidden bg-ink-900 aspect-[1448/1086]">
                         {p.cover_url ? (
                             <motion.img
                                 src={p.cover_url}
@@ -197,6 +187,7 @@ function ProjectCard({
 export function Projects({ items }: { items: ProjectItem[] }) {
     const { t, i18n } = useTranslation();
     const [filter, setFilter] = useState<string>("all");
+    const [page, setPage] = useState<number>(1);
     const ref = useRef<HTMLDivElement>(null);
     const { scrollYProgress } = useScroll({
         target: ref,
@@ -204,15 +195,39 @@ export function Projects({ items }: { items: ProjectItem[] }) {
     });
     const yOrb = useTransform(scrollYProgress, [0, 1], [-80, 80]);
 
+    const cats = Array.from(
+        new Set(
+            (items ?? []).map((p) => (p.category || "other").toLowerCase()),
+        ),
+    );
+    const filtered = useMemo(
+        () =>
+            filter === "all"
+                ? items ?? []
+                : (items ?? []).filter(
+                      (p) => (p.category || "").toLowerCase() === filter,
+                  ),
+        [items, filter],
+    );
+
+    const PER_PAGE = 6;
+    const totalPages = Math.max(1, Math.ceil(filtered.length / PER_PAGE));
+
+    // Reset to page 1 whenever filter changes or when current page is out of range
+    useEffect(() => {
+        setPage(1);
+    }, [filter]);
+    useEffect(() => {
+        if (page > totalPages) setPage(1);
+    }, [page, totalPages]);
+
     if (!items?.length) return null;
 
-    const cats = Array.from(
-        new Set(items.map((p) => (p.category || "other").toLowerCase())),
+    const safePage = Math.min(page, totalPages);
+    const pageItems = filtered.slice(
+        (safePage - 1) * PER_PAGE,
+        safePage * PER_PAGE,
     );
-    const filtered =
-        filter === "all"
-            ? items
-            : items.filter((p) => (p.category || "").toLowerCase() === filter);
 
     return (
         <Section id="projects">
@@ -256,17 +271,71 @@ export function Projects({ items }: { items: ProjectItem[] }) {
                     layout
                     className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 lg:auto-rows-fr"
                 >
-                    {filtered.map((p, i) => (
+                    {pageItems.map((p, i) => (
                         <ProjectCard
                             key={p.id}
                             project={p}
                             index={i}
                             isId={i18n.language === "id"}
-                            isLarge={i === 0 && p.is_featured === true}
                             t={t}
                         />
                     ))}
                 </motion.div>
+
+                {totalPages > 1 && (
+                    <div className="mt-10 flex flex-wrap items-center justify-center gap-2">
+                        <button
+                            type="button"
+                            onClick={() => setPage((p) => Math.max(1, p - 1))}
+                            disabled={safePage === 1}
+                            className={cn(
+                                "rounded-full border px-4 py-2 text-sm font-medium transition-all",
+                                safePage === 1
+                                    ? "cursor-not-allowed border-white/5 bg-white/[0.02] text-ink-300/50"
+                                    : "border-white/10 bg-white/[0.04] text-ink-100 hover:border-white/25 hover:bg-white/10",
+                            )}
+                            aria-label="Previous page"
+                        >
+                            ‹
+                        </button>
+                        {Array.from({ length: totalPages }, (_, i) => i + 1).map(
+                            (n) => (
+                                <button
+                                    key={n}
+                                    type="button"
+                                    onClick={() => setPage(n)}
+                                    aria-current={
+                                        safePage === n ? "page" : undefined
+                                    }
+                                    className={cn(
+                                        "min-w-[40px] rounded-full border px-3 py-2 text-sm font-medium transition-all",
+                                        safePage === n
+                                            ? "border-transparent bg-brand-gradient text-ink-900 shadow-glow"
+                                            : "border-white/10 bg-white/[0.04] text-ink-100 hover:border-white/25 hover:bg-white/10",
+                                    )}
+                                >
+                                    {n}
+                                </button>
+                            ),
+                        )}
+                        <button
+                            type="button"
+                            onClick={() =>
+                                setPage((p) => Math.min(totalPages, p + 1))
+                            }
+                            disabled={safePage === totalPages}
+                            className={cn(
+                                "rounded-full border px-4 py-2 text-sm font-medium transition-all",
+                                safePage === totalPages
+                                    ? "cursor-not-allowed border-white/5 bg-white/[0.02] text-ink-300/50"
+                                    : "border-white/10 bg-white/[0.04] text-ink-100 hover:border-white/25 hover:bg-white/10",
+                            )}
+                            aria-label="Next page"
+                        >
+                            ›
+                        </button>
+                    </div>
+                )}
             </div>
         </Section>
     );

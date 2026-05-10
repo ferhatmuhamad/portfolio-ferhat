@@ -73,7 +73,7 @@ export function EducationSection({
                 <div className="grid gap-12 lg:grid-cols-12">
                     {/* Educations — left, big */}
                     {educations?.length > 0 && (
-                        <div className="lg:col-span-7">
+                        <div className="min-w-0 lg:col-span-7">
                             <div className="mb-6 flex items-center gap-3">
                                 <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-brand-gradient text-ink-900 shadow-glow">
                                     <BookOpen size={20} />
@@ -105,15 +105,27 @@ export function EducationSection({
                                                 duration: 0.55,
                                                 delay: i * 0.1,
                                             }}
-                                            className="relative"
+                                            className="relative min-w-0"
                                         >
-                                            {/* Dot */}
-                                            <span className="absolute -left-[1.2rem] sm:-left-[1.45rem] top-2 flex h-5 w-5 items-center justify-center">
+                                            {/*
+                                                Dot — vertically aligned to top of card,
+                                                horizontally centered on the rail line.
+                                                Item lives inside `pl-6 sm:pl-8` (rail
+                                                padding = 1.5rem / 2rem) and the line is at
+                                                `left-2 sm:left-3` (0.5rem / 0.75rem) relative
+                                                to the rail container. So the dot's center,
+                                                relative to the item box, must sit at:
+                                                  mobile:  0.5rem - 1.5rem = -1rem  (-left-4)
+                                                  ≥sm:     0.75rem - 2rem  = -1.25rem (-left-5)
+                                                We use `-translate-x-1/2` so `left` defines
+                                                the dot's center, not its left edge.
+                                            */}
+                                            <span className="absolute -left-4 sm:-left-5 top-2 flex h-5 w-5 -translate-x-1/2 items-center justify-center">
                                                 <span className="absolute inline-flex h-5 w-5 animate-ping rounded-full bg-brand-400/40" />
                                                 <span className="relative inline-flex h-3 w-3 rounded-full bg-brand-gradient shadow-glow" />
                                             </span>
 
-                                            <div className="group relative overflow-hidden rounded-2xl border border-white/10 bg-white/[0.04] p-5 sm:p-6 backdrop-blur-xl transition-all hover:-translate-y-1 hover:border-brand-400/30 hover:shadow-glow">
+                                            <div className="group relative w-full max-w-full overflow-hidden rounded-2xl border border-white/10 bg-white/[0.04] p-5 sm:p-6 backdrop-blur-xl transition-all hover:-translate-y-1 hover:border-brand-400/30 hover:shadow-glow">
                                                 <div
                                                     aria-hidden
                                                     className="pointer-events-none absolute -top-12 -right-12 h-40 w-40 rounded-full bg-brand-500/10 blur-3xl opacity-0 transition-opacity duration-500 group-hover:opacity-100"
@@ -130,12 +142,14 @@ export function EducationSection({
                                                     {e.institution}
                                                 </h4>
                                                 {e.degree && (
-                                                    <p className="mt-1 inline-flex items-center gap-2 text-sm text-ink-100">
+                                                    <p className="mt-1 flex flex-wrap items-center gap-2 break-words text-sm text-ink-100">
                                                         <GraduationCap
                                                             size={14}
-                                                            className="text-brand-300"
+                                                            className="shrink-0 text-brand-300"
                                                         />
-                                                        {e.degree}
+                                                        <span className="break-words">
+                                                            {e.degree}
+                                                        </span>
                                                     </p>
                                                 )}
                                                 {(() => {
@@ -146,7 +160,7 @@ export function EducationSection({
                                                             ? e.description_id
                                                             : e.description;
                                                     return desc ? (
-                                                        <p className="mt-3 text-sm leading-relaxed text-ink-200">
+                                                        <p className="mt-3 break-words text-sm leading-relaxed text-ink-200">
                                                             {desc}
                                                         </p>
                                                     ) : null;
@@ -161,7 +175,7 @@ export function EducationSection({
 
                     {/* Certifications — right */}
                     {certifications?.length > 0 && (
-                        <div className="lg:col-span-5">
+                        <div className="min-w-0 lg:col-span-5">
                             <div className="mb-6 flex items-center gap-3">
                                 <span className="flex h-10 w-10 items-center justify-center rounded-xl border border-white/15 bg-white/5 text-brand-300 backdrop-blur-md">
                                     <Award size={20} />

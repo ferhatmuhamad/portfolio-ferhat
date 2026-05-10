@@ -11,11 +11,20 @@ import {
 } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import type { PageProps } from "@/types";
+import { buildWhatsAppUrl } from "@/lib/whatsapp";
 
 export function Footer() {
-    const { profile, site } = usePage<PageProps>().props;
+    const { profile, site, locale } = usePage<PageProps>().props;
     const { t } = useTranslation();
     const year = new Date().getFullYear();
+
+    const isID = locale === "id";
+    const summary =
+        (isID && profile?.summary_id ? profile.summary_id : profile?.summary) ||
+        profile?.headline ||
+        "";
+    const ctaHref = buildWhatsAppUrl(profile) || "#contact";
+    const ctaIsExternal = ctaHref.startsWith("http");
 
     const navLinks: Array<{ label: string; href: string }> = [
         { label: t("nav.about"), href: "#about" },
@@ -76,7 +85,9 @@ export function Footer() {
                             </p>
                         </div>
                         <a
-                            href="#contact"
+                            href={ctaHref}
+                            target={ctaIsExternal ? "_blank" : undefined}
+                            rel={ctaIsExternal ? "noopener noreferrer" : undefined}
                             className="group inline-flex items-center gap-2 rounded-full bg-brand-gradient px-6 py-3 text-sm font-semibold text-ink-900 shadow-glow transition-all hover:shadow-glow-lg"
                         >
                             {t("footer.cta.button")}
@@ -106,7 +117,7 @@ export function Footer() {
                             </div>
                         </div>
                         <p className="mt-5 max-w-sm text-sm leading-relaxed text-ink-300">
-                            {profile?.headline}
+                            {summary}
                         </p>
                         <div className="mt-6 flex gap-2.5">
                             {profile?.socials?.github && (
@@ -172,8 +183,8 @@ export function Footer() {
                         </h3>
                         <ul className="mt-5 space-y-4 text-sm">
                             {profile?.email && (
-                                <li className="group flex items-start gap-3 text-ink-100">
-                                    <span className="mt-0.5 flex h-9 w-9 items-center justify-center rounded-xl border border-white/10 bg-white/5 text-brand-300 transition-colors group-hover:border-brand-400/40 group-hover:text-brand-200">
+                                <li className="group flex items-center gap-3 text-ink-100">
+                                    <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl border border-white/10 bg-white/5 text-brand-300 transition-colors group-hover:border-brand-400/40 group-hover:text-brand-200">
                                         <Mail size={14} />
                                     </span>
                                     <a
@@ -185,8 +196,8 @@ export function Footer() {
                                 </li>
                             )}
                             {profile?.phone && (
-                                <li className="group flex items-start gap-3 text-ink-100">
-                                    <span className="mt-0.5 flex h-9 w-9 items-center justify-center rounded-xl border border-white/10 bg-white/5 text-brand-300 transition-colors group-hover:border-brand-400/40 group-hover:text-brand-200">
+                                <li className="group flex items-center gap-3 text-ink-100">
+                                    <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl border border-white/10 bg-white/5 text-brand-300 transition-colors group-hover:border-brand-400/40 group-hover:text-brand-200">
                                         <Phone size={14} />
                                     </span>
                                     <a
@@ -198,8 +209,8 @@ export function Footer() {
                                 </li>
                             )}
                             {profile?.location && (
-                                <li className="group flex items-start gap-3 text-ink-100">
-                                    <span className="mt-0.5 flex h-9 w-9 items-center justify-center rounded-xl border border-white/10 bg-white/5 text-brand-300 transition-colors group-hover:border-brand-400/40 group-hover:text-brand-200">
+                                <li className="group flex items-center gap-3 text-ink-100">
+                                    <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl border border-white/10 bg-white/5 text-brand-300 transition-colors group-hover:border-brand-400/40 group-hover:text-brand-200">
                                         <MapPin size={14} />
                                     </span>
                                     <span className="leading-relaxed">

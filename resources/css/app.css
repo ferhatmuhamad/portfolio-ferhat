@@ -153,7 +153,7 @@
 
     /* Section base */
     .section {
-        @apply relative py-24 md:py-32 overflow-hidden;
+        @apply relative py-24 md:py-32 overflow-x-clip;
     }
     .section-light {
         @apply bg-cream-100 text-ink-900;

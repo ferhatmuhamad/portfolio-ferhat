@@ -1,6 +1,7 @@
 import { usePage } from "@inertiajs/react";
 import { useEffect, useState } from "react";
 import { cn } from "@/lib/cn";
+import { buildWhatsAppUrl } from "@/lib/whatsapp";
 import type { PageProps } from "@/types";
 
 function WhatsAppIcon({ size = 28 }: { size?: number }) {
@@ -36,11 +37,8 @@ export function FloatingWhatsApp() {
 
     if (!profile?.whatsapp) return null;
 
-    const number = profile.whatsapp.replace(/\D/g, "");
-    const message = encodeURIComponent(
-        "Hi Ferhat! I'd like to discuss a project with you.",
-    );
-    const href = `https://wa.me/${number}?text=${message}`;
+    const href = buildWhatsAppUrl(profile);
+    if (!href) return null;
 
     return (
         <div

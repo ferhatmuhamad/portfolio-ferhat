@@ -4,7 +4,7 @@ import { Glass } from "@/Components/ui/Glass";
 import { Section } from "@/Components/ui/Section";
 import { formatDate } from "@/lib/format";
 import { PageProps } from "@/types";
-import { ArrowLeft, Clock } from "lucide-react";
+import { Clock } from "lucide-react";
 
 interface Post {
     id: number;
@@ -35,16 +35,25 @@ export default function BlogShow({
     const content = isID && post.content_id ? post.content_id : post.content;
 
     return (
-        <PublicLayout title={title} description={excerpt}>
-            <Section className="pt-32">
-                <Link
-                    href={route("blog.index")}
-                    className="inline-flex items-center gap-2 mb-8 text-sm text-ink-300 hover:text-brand-300"
-                >
-                    <ArrowLeft size={14} />
-                    Back to blog
-                </Link>
-
+        <PublicLayout
+            title={title}
+            description={excerpt}
+            detail={{
+                backHref: route("blog.index"),
+                backLabel: isID ? "Kembali" : "Back",
+                eyebrow: isID ? "Artikel" : "Article",
+                title,
+                breadcrumbs: [
+                    { label: isID ? "Beranda" : "Home", href: "/" },
+                    {
+                        label: isID ? "Blog" : "Blog",
+                        href: route("blog.index"),
+                    },
+                    { label: title },
+                ],
+            }}
+        >
+            <Section className="!pt-0">
                 <article className="max-w-3xl mx-auto">
                     <div className="flex items-center gap-3 text-xs text-ink-400">
                         {post.published_at && (
@@ -57,9 +66,6 @@ export default function BlogShow({
                             </span>
                         )}
                     </div>
-                    <h1 className="mt-3 text-4xl font-bold text-white font-display sm:text-5xl">
-                        {title}
-                    </h1>
                     {excerpt && (
                         <p className="mt-4 text-lg leading-relaxed text-ink-200">
                             {excerpt}

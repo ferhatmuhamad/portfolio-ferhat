@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Project;
 use App\Support\HandlesUploads;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 
@@ -40,11 +41,23 @@ class ProjectController extends Controller
 
     public function update(Request $r, Project $project)
     {
+        Log::info('Project.update incoming', [
+            'project_id' => $project->id,
+            'has_gallery_input' => $r->has('gallery'),
+            'gallery_input' => $r->input('gallery'),
+            'has_gallery_files' => $r->hasFile('gallery_files'),
+            'gallery_files_count' => is_array($r->file('gallery_files')) ? count($r->file('gallery_files')) : 0,
+            'all_keys' => array_keys($r->all()),
+            'file_keys' => array_keys($r->allFiles()),
+            '_method' => $r->input('_method'),
+        ]);
         $data = $this->validated($r);
         $data['cover_path'] = $this->handleUpload($r->file('cover'), $project->cover_path, 'projects/covers');
         $data['gallery'] = $this->handleGallery($r, $project->gallery ?? []);
         unset($data['cover'], $data['gallery_files']);
+        Log::info('Project.update final data', ['gallery' => $data['gallery'], 'cover_path' => $data['cover_path']]);
         $project->update($data);
+        Log::info('Project.update saved', ['project_id' => $project->id, 'fresh_gallery' => $project->fresh()->gallery]);
         return redirect()->route('admin.projects.index')->with('success', 'Project updated.');
     }
 
