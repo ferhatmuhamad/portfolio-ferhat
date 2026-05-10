@@ -10,6 +10,7 @@ import { usePage } from "@inertiajs/react";
 import type { PageProps } from "@/types";
 import { useEffect, useRef, useState } from "react";
 import { useIsMobile } from "@/lib/useIsMobile";
+import { SocialLinks } from "@/Components/Public/SocialLinks";
 
 export function Hero() {
     const isMobile = useIsMobile();
@@ -65,6 +66,12 @@ function HeroMobile() {
                                 <ArrowRight size={16} />
                             </a>
                         </div>
+
+                        <SocialLinks
+                            socials={profile?.socials}
+                            size="sm"
+                            className="mt-6"
+                        />
 
                         {profile?.stats && profile.stats.length > 0 && (
                             <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-3 text-sm text-ink-300">
@@ -239,6 +246,18 @@ function HeroDesktop() {
                                     className="transition-transform group-hover:translate-x-1"
                                 />
                             </a>
+                        </motion.div>
+
+                        <motion.div
+                            initial={{ opacity: 0, y: 15 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.6, delay: 0.65 }}
+                            className="mt-6"
+                        >
+                            <SocialLinks
+                                socials={profile?.socials}
+                                size="sm"
+                            />
                         </motion.div>
 
                         {profile?.stats && profile.stats.length > 0 && (

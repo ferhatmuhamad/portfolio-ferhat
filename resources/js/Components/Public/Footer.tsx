@@ -12,6 +12,7 @@ import {
 import { useTranslation } from "react-i18next";
 import type { PageProps } from "@/types";
 import { buildWhatsAppUrl } from "@/lib/whatsapp";
+import { SocialLinks } from "@/Components/Public/SocialLinks";
 
 export function Footer() {
     const { profile, site, locale } = usePage<PageProps>().props;
@@ -122,41 +123,10 @@ export function Footer() {
                         <p className="mt-5 max-w-sm text-sm leading-relaxed text-ink-300">
                             {tagline}
                         </p>
-                        <div className="mt-6 flex gap-2.5">
-                            {profile?.socials?.github && (
-                                <a
-                                    href={profile.socials.github}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    aria-label="GitHub"
-                                    className="group flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-white/5 text-ink-100 backdrop-blur-md transition-all hover:-translate-y-0.5 hover:border-brand-400/40 hover:bg-brand-500/15 hover:text-white"
-                                >
-                                    <Github size={16} />
-                                </a>
-                            )}
-                            {profile?.socials?.linkedin && (
-                                <a
-                                    href={profile.socials.linkedin}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    aria-label="LinkedIn"
-                                    className="group flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-white/5 text-ink-100 backdrop-blur-md transition-all hover:-translate-y-0.5 hover:border-brand-400/40 hover:bg-brand-500/15 hover:text-white"
-                                >
-                                    <Linkedin size={16} />
-                                </a>
-                            )}
-                            {profile?.socials?.instagram && (
-                                <a
-                                    href={profile.socials.instagram}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    aria-label="Instagram"
-                                    className="group flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-white/5 text-ink-100 backdrop-blur-md transition-all hover:-translate-y-0.5 hover:border-brand-400/40 hover:bg-brand-500/15 hover:text-white"
-                                >
-                                    <Instagram size={16} />
-                                </a>
-                            )}
-                        </div>
+                        <SocialLinks
+                            socials={profile?.socials}
+                            className="mt-6"
+                        />
                     </div>
 
                     {/* Quick nav */}

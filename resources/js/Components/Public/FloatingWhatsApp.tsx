@@ -1,10 +1,11 @@
 import { usePage } from "@inertiajs/react";
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { cn } from "@/lib/cn";
 import { buildWhatsAppUrl } from "@/lib/whatsapp";
 import type { PageProps } from "@/types";
 
-function WhatsAppIcon({ size = 28 }: { size?: number }) {
+function WhatsAppIcon({ size = 36 }: { size?: number }) {
     return (
         <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -20,19 +21,14 @@ function WhatsAppIcon({ size = 28 }: { size?: number }) {
 }
 
 export function FloatingWhatsApp() {
-    const { profile } = usePage<PageProps>().props;
-    const [showTip, setShowTip] = useState(false);
+    const { profile, locale } = usePage<PageProps>().props;
+    const { t } = useTranslation();
     const [visible, setVisible] = useState(false);
+    const [hovered, setHovered] = useState(false);
 
     useEffect(() => {
         const t = setTimeout(() => setVisible(true), 800);
-        const tip = setTimeout(() => setShowTip(true), 1800);
-        const hide = setTimeout(() => setShowTip(false), 7000);
-        return () => {
-            clearTimeout(t);
-            clearTimeout(tip);
-            clearTimeout(hide);
-        };
+        return () => clearTimeout(t);
     }, []);
 
     if (!profile?.whatsapp) return null;
@@ -40,32 +36,52 @@ export function FloatingWhatsApp() {
     const href = buildWhatsAppUrl(profile);
     if (!href) return null;
 
+    const isID = locale === "id";
+    // Translation key with safe fallback in both languages.
+    const label =
+        t("whatsapp.floatingLabel", {
+            defaultValue: isID
+                ? "Kirimi saya pesan"
+                : "Send me a message",
+        });
+
     return (
         <div
             className={cn(
-                "fixed bottom-4 right-4 sm:bottom-5 sm:right-5 z-40 flex items-end gap-3 transition-all duration-700",
+                "fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-40 flex items-center gap-3 transition-all duration-700",
                 visible
                     ? "translate-y-0 opacity-100"
                     : "translate-y-8 opacity-0",
             )}
+            onMouseEnter={() => setHovered(true)}
+            onMouseLeave={() => setHovered(false)}
         >
-            {showTip && (
-                <div className="hidden animate-fade-in-up rounded-2xl border border-white/10 bg-ink-800/90 px-4 py-2.5 text-sm text-ink-100 shadow-glass backdrop-blur-2xl sm:block">
-                    <span className="block text-xs text-ink-300">
-                        {profile.name}
-                    </span>
-                    Need a website? Let's chat 👋
-                </div>
-            )}
+            {/* Animated label that slides in on hover (desktop / pointer devices) */}
+            <span
+                aria-hidden={!hovered}
+                className={cn(
+                    "pointer-events-none hidden whitespace-nowrap rounded-full border border-white/10 bg-ink-900/90 px-4 py-2.5 text-sm font-medium text-white shadow-glass backdrop-blur-2xl transition-all duration-300 sm:inline-flex",
+                    hovered
+                        ? "translate-x-0 scale-100 opacity-100"
+                        : "translate-x-4 scale-95 opacity-0",
+                )}
+            >
+                {label}
+                <span
+                    aria-hidden
+                    className="pointer-events-none absolute -right-1.5 top-1/2 h-3 w-3 -translate-y-1/2 rotate-45 border-y border-r border-white/10 bg-ink-900/90"
+                />
+            </span>
+
             <a
                 href={href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group relative inline-flex h-12 w-12 sm:h-16 sm:w-16 items-center justify-center rounded-full bg-[#25D366] text-white shadow-glow transition-all duration-300 hover:scale-110 hover:shadow-glow-lg"
-                aria-label="Chat on WhatsApp"
+                className="group relative inline-flex h-14 w-14 items-center justify-center rounded-full bg-[#25D366] text-white shadow-glow transition-all duration-300 hover:scale-110 hover:shadow-glow-lg sm:h-16 sm:w-16"
+                aria-label={label}
             >
                 <span className="absolute inset-0 rounded-full bg-[#25D366] animate-pulse-ring" />
-                <WhatsAppIcon size={28} />
+                <WhatsAppIcon size={36} />
             </a>
         </div>
     );

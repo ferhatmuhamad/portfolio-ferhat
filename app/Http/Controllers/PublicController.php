@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Certification;
 use App\Models\ContactMessage;
+use App\Mail\ContactMessageMail;
 use App\Models\Education;
 use App\Models\Experience;
 use App\Models\Post;
@@ -82,7 +83,31 @@ class PublicController extends Controller
             'message' => 'required|string|max:5000',
         ])->validate();
 
-        ContactMessage::create($data + ['ip_address' => $request->ip()]);
+        $message = ContactMessage::create($data + ['ip_address' => $request->ip()]);
+
+        // Best-effort email notification to the site owner. Failures are
+        // swallowed so the visitor still sees a success state — the message
+        // is already persisted in the database (admin > Messages).
+        try {
+            $to = optional(Profile::first())->email
+                ?? config('mail.from.address');
+            if ($to) {
+                \Illuminate\Support\Facades\Mail::to($to)->send(
+                    new ContactMessageMail(
+                        senderName:  $message->name,
+                        senderEmail: $message->email,
+                        subjectLine: $message->subject,
+                        body:        $message->message,
+                        ipAddress:   $message->ip_address,
+                    )
+                );
+            }
+        } catch (\Throwable $e) {
+            \Illuminate\Support\Facades\Log::warning(
+                'Contact email send failed: ' . $e->getMessage()
+            );
+        }
+
         return back()->with('success', 'Message sent! I will reply soon.');
     }
 
