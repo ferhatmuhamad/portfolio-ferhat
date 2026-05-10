@@ -7,10 +7,46 @@ import {
 } from "framer-motion";
 import { useTranslation } from "react-i18next";
 import { Check, Sparkles, ArrowRight } from "lucide-react";
-import { useRef } from "react";
+import { useMemo, useRef, useState } from "react";
 import { Section, SectionHeader } from "@/Components/ui/Section";
 import { formatCurrency } from "@/lib/format";
 import { cn } from "@/lib/cn";
+
+// Approximate IDR -> USD conversion that snaps up to a "clean" psychological
+// price. The result is intentionally a touch higher than a direct conversion
+// (so USD pricing is never undersold).
+function idrToUsd(idr: number): number {
+    const raw = idr / 14000;
+    const tiers = [
+        49, 79, 99, 149, 199, 249, 299, 349, 399, 449, 499, 599, 699, 799,
+        899, 999, 1199, 1499, 1799, 1999, 2499, 2999, 3999, 4999, 5999, 7999,
+        9999,
+    ];
+    for (const tier of tiers) if (tier >= raw) return tier;
+    // Beyond the table: round up to the next .999 increment of 1000
+    return Math.ceil(raw / 1000) * 1000 - 1;
+}
+
+function displayPrice(
+    plan: PricingPlan,
+    currency: "IDR" | "USD",
+    locale: string,
+): string | null {
+    if (plan.price == null) return null;
+    const baseCurrency = (plan.currency || "IDR").toUpperCase();
+    if (currency === "USD") {
+        // Treat any non-USD source as IDR for conversion purposes.
+        const usd =
+            baseCurrency === "USD" ? plan.price : idrToUsd(plan.price);
+        return formatCurrency(usd, "USD", "en-US");
+    }
+    // IDR view
+    if (baseCurrency === "USD") {
+        // Reverse-approximate (rare): assume the row is USD; scale up to IDR.
+        return formatCurrency(plan.price * 14000, "IDR", "id-ID");
+    }
+    return formatCurrency(plan.price, "IDR", locale);
+}
 
 export interface PricingPlan {
     id: number;
@@ -66,19 +102,21 @@ function PricingCard({
     plan,
     index,
     isId,
+    currency,
     t,
 }: {
     plan: PricingPlan;
     index: number;
     isId: boolean;
+    currency: "IDR" | "USD";
     t: (k: string) => string;
 }) {
     const features =
         (isId && plan.features_id?.length ? plan.features_id : plan.features) ||
         [];
-    const price = plan.price
-        ? formatCurrency(plan.price, plan.currency || "IDR")
-        : t("pricing.custom");
+    const price =
+        displayPrice(plan, currency, isId ? "id-ID" : "en-US") ||
+        t("pricing.custom");
 
     const mx = useMotionValue(0);
     const my = useMotionValue(0);
@@ -248,7 +286,29 @@ export function Pricing({ plans }: { plans: PricingPlan[] }) {
     const yOrb1 = useTransform(scrollYProgress, [0, 1], [-50, 50]);
     const yOrb2 = useTransform(scrollYProgress, [0, 1], [50, -50]);
 
+    // Categorize by billing_period: "hour"/"jam" goes to the Hour tab,
+    // everything else (project / month / year / custom / null) is Project.
+    const isHourPlan = (p: PricingPlan) => {
+        const bp = (p.billing_period || "").trim().toLowerCase();
+        return bp === "hour" || bp === "jam";
+    };
+    const projectPlans = useMemo(
+        () => plans?.filter((p) => !isHourPlan(p)) || [],
+        [plans],
+    );
+    const hourPlans = useMemo(
+        () => plans?.filter(isHourPlan) || [],
+        [plans],
+    );
+
+    const [tab, setTab] = useState<"project" | "hour">(
+        projectPlans.length ? "project" : "hour",
+    );
+    const [currency, setCurrency] = useState<"IDR" | "USD">("IDR");
+
     if (!plans?.length) return null;
+
+    const visiblePlans = tab === "project" ? projectPlans : hourPlans;
 
     return (
         <Section id="pricing">
@@ -269,17 +329,110 @@ export function Pricing({ plans }: { plans: PricingPlan[] }) {
                     title={t("pricing.title")}
                     subtitle={t("pricing.subtitle")}
                 />
-                <div className="grid grid-cols-1 items-stretch gap-6 sm:grid-cols-2 lg:grid-cols-3">
-                    {plans.map((p, i) => (
-                        <PricingCard
-                            key={p.id}
-                            plan={p}
-                            index={i}
-                            isId={isId}
-                            t={t}
-                        />
-                    ))}
+
+                {/* Controls: type tab + currency toggle */}
+                <div className="mb-10 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
+                    {/* Type tab */}
+                    <div
+                        role="tablist"
+                        aria-label="Pricing type"
+                        className="inline-flex rounded-full border border-white/10 bg-white/[0.04] p-1 backdrop-blur-md"
+                    >
+                        {(["project", "hour"] as const).map((key) => {
+                            const active = tab === key;
+                            return (
+                                <button
+                                    key={key}
+                                    type="button"
+                                    role="tab"
+                                    aria-selected={active}
+                                    onClick={() => setTab(key)}
+                                    className={cn(
+                                        "relative rounded-full px-5 py-2 text-sm font-semibold transition-colors",
+                                        active
+                                            ? "text-ink-900"
+                                            : "text-ink-200 hover:text-white",
+                                    )}
+                                >
+                                    {active && (
+                                        <motion.span
+                                            layoutId="pricing-tab-pill"
+                                            className="absolute inset-0 -z-0 rounded-full bg-brand-gradient shadow-glow"
+                                            transition={{
+                                                type: "spring",
+                                                stiffness: 350,
+                                                damping: 30,
+                                            }}
+                                        />
+                                    )}
+                                    <span className="relative z-10">
+                                        {t(`pricing.tabs.${key}`)}
+                                    </span>
+                                </button>
+                            );
+                        })}
+                    </div>
+
+                    {/* Currency toggle */}
+                    <div
+                        role="group"
+                        aria-label="Currency"
+                        className="inline-flex rounded-full border border-white/10 bg-white/[0.04] p-1 backdrop-blur-md"
+                    >
+                        {(["IDR", "USD"] as const).map((c) => {
+                            const active = currency === c;
+                            return (
+                                <button
+                                    key={c}
+                                    type="button"
+                                    onClick={() => setCurrency(c)}
+                                    aria-pressed={active}
+                                    className={cn(
+                                        "relative rounded-full px-4 py-2 text-xs font-bold uppercase tracking-wider transition-colors",
+                                        active
+                                            ? "text-ink-900"
+                                            : "text-ink-200 hover:text-white",
+                                    )}
+                                >
+                                    {active && (
+                                        <motion.span
+                                            layoutId="pricing-currency-pill"
+                                            className="absolute inset-0 -z-0 rounded-full bg-white shadow"
+                                            transition={{
+                                                type: "spring",
+                                                stiffness: 350,
+                                                damping: 30,
+                                            }}
+                                        />
+                                    )}
+                                    <span className="relative z-10">{c}</span>
+                                </button>
+                            );
+                        })}
+                    </div>
                 </div>
+
+                {visiblePlans.length > 0 ? (
+                    <div
+                        key={tab + currency}
+                        className="grid grid-cols-1 items-stretch gap-6 sm:grid-cols-2 lg:grid-cols-3"
+                    >
+                        {visiblePlans.map((p, i) => (
+                            <PricingCard
+                                key={p.id}
+                                plan={p}
+                                index={i}
+                                isId={isId}
+                                currency={currency}
+                                t={t}
+                            />
+                        ))}
+                    </div>
+                ) : (
+                    <div className="mx-auto max-w-md rounded-3xl border border-white/10 bg-white/[0.03] p-10 text-center text-sm text-ink-300 backdrop-blur-md">
+                        {t(`pricing.empty.${tab}`)}
+                    </div>
+                )}
             </div>
         </Section>
     );

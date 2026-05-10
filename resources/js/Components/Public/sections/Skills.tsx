@@ -235,7 +235,7 @@ function TechLogo({
         <Fallback
             size={size}
             strokeWidth={1.6}
-            className="inline-block text-brand-200/90"
+            className="inline-block text-white opacity-90"
             aria-hidden
         />
     );

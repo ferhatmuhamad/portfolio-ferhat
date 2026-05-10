@@ -99,6 +99,14 @@
             "year": "tahun",
             "hour": "jam",
             "customQuote": "Penawaran Khusus"
+        },
+        "tabs": {
+            "project": "Per Proyek",
+            "hour": "Per Jam"
+        },
+        "empty": {
+            "hour": "Belum ada paket per jam. Gunakan tab proyek atau hubungi saya untuk tarif khusus.",
+            "project": "Belum ada paket proyek."
         }
     },
     "blog": {

@@ -99,6 +99,14 @@
             "year": "year",
             "hour": "hour",
             "customQuote": "Custom Quote"
+        },
+        "tabs": {
+            "project": "By Project",
+            "hour": "By Hour"
+        },
+        "empty": {
+            "hour": "No hourly plans yet. Use the project tab or contact me for a custom rate.",
+            "project": "No project plans yet."
         }
     },
     "blog": {
