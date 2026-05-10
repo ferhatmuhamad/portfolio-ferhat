@@ -103,11 +103,6 @@ export function DetailHero({ eyebrow, title, breadcrumbs }: DetailHeroProps) {
                     </h1>
                 </div>
 
-                {/* Soft gradient fade to dark page background */}
-                <div
-                    aria-hidden
-                    className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-gradient-to-b from-transparent to-ink-950 sm:h-32"
-                />
             </div>
         </section>
     );
