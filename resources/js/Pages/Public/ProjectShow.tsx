@@ -57,7 +57,7 @@ export default function ProjectShow({
                                 <img
                                     src={project.cover_url}
                                     alt={project.title}
-                                    className="aspect-video w-full object-cover"
+                                    className="aspect-[1448/1086] w-full object-cover"
                                 />
                             </Glass>
                         )}
@@ -90,7 +90,7 @@ export default function ProjectShow({
                                                 <img
                                                     src={src}
                                                     alt=""
-                                                    className="aspect-video w-full object-cover"
+                                                    className="aspect-[1448/1086] w-full object-cover"
                                                 />
                                             </Glass>
                                         ))}
@@ -99,7 +99,7 @@ export default function ProjectShow({
                         </div>
                     </div>
 
-                    <aside className="space-y-6">
+                    <aside className="space-y-6 lg:sticky lg:top-24 lg:self-start">
                         <Glass className="space-y-4 p-6">
                             <h3 className="font-display text-sm font-bold uppercase tracking-wider text-brand-400">
                                 Project Info
