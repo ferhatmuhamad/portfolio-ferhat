@@ -11,6 +11,7 @@ import { useTranslation } from "react-i18next";
 import { ArrowUpRight, Github, Sparkles } from "lucide-react";
 import { Section, SectionHeader } from "@/Components/ui/Section";
 import { cn } from "@/lib/cn";
+import { useIsMobile } from "@/lib/useIsMobile";
 
 export interface ProjectItem {
     id: number;
@@ -37,6 +38,7 @@ function ProjectCard({
     isId: boolean;
     t: (k: string) => string;
 }) {
+    const isMobile = useIsMobile();
     const mx = useMotionValue(0);
     const my = useMotionValue(0);
     const rx = useSpring(useTransform(my, [-0.5, 0.5], [5, -5]), {
@@ -47,34 +49,42 @@ function ProjectCard({
         stiffness: 150,
         damping: 16,
     });
-    const onMove = (e: React.MouseEvent<HTMLDivElement>) => {
-        const r = e.currentTarget.getBoundingClientRect();
-        mx.set((e.clientX - r.left) / r.width - 0.5);
-        my.set((e.clientY - r.top) / r.height - 0.5);
-    };
-    const onLeave = () => {
-        mx.set(0);
-        my.set(0);
-    };
+    const onMove = isMobile
+        ? undefined
+        : (e: React.MouseEvent<HTMLDivElement>) => {
+              const r = e.currentTarget.getBoundingClientRect();
+              mx.set((e.clientX - r.left) / r.width - 0.5);
+              my.set((e.clientY - r.top) / r.height - 0.5);
+          };
+    const onLeave = isMobile
+        ? undefined
+        : () => {
+              mx.set(0);
+              my.set(0);
+          };
 
     return (
         <motion.div
             layout
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
+            initial={isMobile ? false : { opacity: 0, y: 50 }}
+            whileInView={isMobile ? undefined : { opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-50px" }}
             transition={{ duration: 0.6, delay: index * 0.06 }}
             onMouseMove={onMove}
             onMouseLeave={onLeave}
-            style={{ perspective: 1400 }}
+            style={isMobile ? undefined : { perspective: 1400 }}
             className="group relative"
         >
             <motion.div
-                style={{
-                    rotateX: rx,
-                    rotateY: ry,
-                    transformStyle: "preserve-3d",
-                }}
+                style={
+                    isMobile
+                        ? undefined
+                        : {
+                              rotateX: rx,
+                              rotateY: ry,
+                              transformStyle: "preserve-3d",
+                          }
+                }
                 className="relative h-full overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-br from-white/[0.06] to-white/[0.02] backdrop-blur-xl transition-shadow duration-500 hover:shadow-glow-lg"
             >
                 {/* Animated border on hover */}
@@ -92,12 +102,19 @@ function ProjectCard({
                     }}
                 />
 
-                <Link href={route("projects.show", p.slug)} className="block">
+                <Link
+                    href={route("projects.show", p.slug)}
+                    prefetch
+                    cacheFor="30s"
+                    className="block"
+                >
                     <div className="relative overflow-hidden bg-ink-900 aspect-[1448/1086]">
                         {p.cover_url ? (
                             <motion.img
                                 src={p.cover_url}
                                 alt={p.title}
+                                loading={index < 2 ? "eager" : "lazy"}
+                                decoding="async"
                                 className="h-full w-full object-cover transition-transform duration-[1.2s] ease-out group-hover:scale-110"
                             />
                         ) : (
@@ -134,6 +151,8 @@ function ProjectCard({
                     <h3 className="font-display text-xl font-semibold text-white md:text-2xl">
                         <Link
                             href={route("projects.show", p.slug)}
+                            prefetch
+                            cacheFor="30s"
                             className="bg-gradient-to-r from-white to-white bg-[length:0%_2px] bg-left-bottom bg-no-repeat transition-all duration-300 hover:bg-[length:100%_2px] hover:from-brand-300 hover:to-sun-400"
                         >
                             {p.title}

@@ -83,6 +83,10 @@ export default function ProjectShow({
                                         <img
                                             src={project.cover_url}
                                             alt={project.title}
+                                            loading="eager"
+                                            decoding="async"
+                                            // @ts-expect-error not in HTML attribute types yet
+                                            fetchpriority="high"
                                             className="aspect-[1448/1086] w-full object-cover transition-transform duration-500 group-hover:scale-[1.02]"
                                         />
                                         <span className="pointer-events-none absolute inset-0 flex items-center justify-center bg-ink-950/0 opacity-0 transition-all group-hover:bg-ink-950/40 group-hover:opacity-100">
@@ -132,6 +136,8 @@ export default function ProjectShow({
                                                                 <img
                                                                     src={src}
                                                                     alt=""
+                                                                    loading="lazy"
+                                                                    decoding="async"
                                                                     className="aspect-[1448/1086] w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
                                                                 />
                                                                 <span className="pointer-events-none absolute inset-0 flex items-center justify-center bg-ink-950/0 opacity-0 transition-all group-hover:bg-ink-950/40 group-hover:opacity-100">
@@ -238,11 +244,15 @@ export default function ProjectShow({
                                                 "projects.show",
                                                 r.slug,
                                             )}
+                                            prefetch
+                                            cacheFor="30s"
                                             className="group flex gap-3"
                                         >
                                             {r.cover_url && (
                                                 <img
                                                     src={r.cover_url}
+                                                    loading="lazy"
+                                                    decoding="async"
                                                     className="h-14 w-20 shrink-0 rounded-lg border border-white/10 object-cover"
                                                 />
                                             )}

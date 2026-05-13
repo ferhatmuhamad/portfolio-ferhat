@@ -1,5 +1,16 @@
 import { useEffect, useRef, useState } from "react";
 
+function detectMobile(): boolean {
+    if (typeof window === "undefined") return false;
+    try {
+        return window.matchMedia(
+            "(pointer: coarse), (max-width: 767px)",
+        ).matches;
+    } catch {
+        return false;
+    }
+}
+
 /**
  * Cinematic background:
  * - Animated grid that drifts
@@ -17,14 +28,20 @@ import { useEffect, useRef, useState } from "react";
  */
 export function BackgroundFx() {
     const spotRef = useRef<HTMLDivElement>(null);
-    const [isMobile, setIsMobile] = useState(false);
+    // Synchronous initial detection so we never render the heavy desktop
+    // background (animated mesh, blobs, beams, noise) on mobile, even for
+    // one frame. That brief flash was a major source of jank on phones.
+    const [isMobile, setIsMobile] = useState<boolean>(detectMobile);
 
     useEffect(() => {
         if (typeof window === "undefined") return;
         const mq = window.matchMedia(
             "(pointer: coarse), (max-width: 767px)",
         );
-        setIsMobile(mq.matches);
+        const update = () => setIsMobile(mq.matches);
+        update();
+        mq.addEventListener?.("change", update);
+        return () => mq.removeEventListener?.("change", update);
     }, []);
 
     useEffect(() => {
