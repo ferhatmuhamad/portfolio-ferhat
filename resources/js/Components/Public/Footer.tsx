@@ -91,7 +91,11 @@ export function Footer() {
                         <a
                             href={ctaHref}
                             target={ctaIsExternal ? "_blank" : undefined}
-                            rel={ctaIsExternal ? "noopener noreferrer" : undefined}
+                            rel={
+                                ctaIsExternal
+                                    ? "noopener noreferrer"
+                                    : undefined
+                            }
                             className="group inline-flex items-center gap-2 rounded-full bg-brand-gradient px-6 py-3 text-sm font-semibold text-ink-900 shadow-glow transition-all hover:shadow-glow-lg"
                         >
                             {t("footer.cta.button")}

@@ -13,7 +13,10 @@ interface DetailHeaderProps {
  * Replaces the main Navbar — only shows a back button so visitors don't
  * accidentally jump to a homepage anchor that doesn't exist on this route.
  */
-export function DetailHeader({ backHref, backLabel = "Back" }: DetailHeaderProps) {
+export function DetailHeader({
+    backHref,
+    backLabel = "Back",
+}: DetailHeaderProps) {
     const [scrolled, setScrolled] = useState(false);
 
     useEffect(() => {

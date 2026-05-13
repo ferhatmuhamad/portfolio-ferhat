@@ -158,7 +158,10 @@ const upscaleSlugs = new Set(["odoo", "woocommerce", "moodle", "tableplus"]);
 // (e.g. "Server Admin (SSH/FTP)", "PWA", "Core Web Vitals").
 // Matched by substring against the lowercased name.
 const lucideFallbacks: Array<{ match: RegExp; icon: LucideIcon }> = [
-    { match: /core\s*web\s*vitals|performance|lighthouse|web\s*vitals/, icon: Gauge },
+    {
+        match: /core\s*web\s*vitals|performance|lighthouse|web\s*vitals/,
+        icon: Gauge,
+    },
     { match: /pwa|progressive\s*web/, icon: Smartphone },
     { match: /payment\s*gateway|midtrans|stripe|xendit/, icon: CreditCard },
     { match: /vps|deployment|deploy|hosting/, icon: Cloud },
@@ -221,7 +224,10 @@ function TechLogo({
                 onError={() => setErrored(true)}
                 style={
                     scale !== 1
-                        ? { transform: `scale(${scale})`, transformOrigin: "center" }
+                        ? {
+                              transform: `scale(${scale})`,
+                              transformOrigin: "center",
+                          }
                         : undefined
                 }
                 className="inline-block opacity-90"

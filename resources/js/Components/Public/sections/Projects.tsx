@@ -222,7 +222,7 @@ export function Projects({ items }: { items: ProjectItem[] }) {
     const filtered = useMemo(
         () =>
             filter === "all"
-                ? items ?? []
+                ? (items ?? [])
                 : (items ?? []).filter(
                       (p) => (p.category || "").toLowerCase() === filter,
                   ),
@@ -317,26 +317,27 @@ export function Projects({ items }: { items: ProjectItem[] }) {
                         >
                             ‹
                         </button>
-                        {Array.from({ length: totalPages }, (_, i) => i + 1).map(
-                            (n) => (
-                                <button
-                                    key={n}
-                                    type="button"
-                                    onClick={() => setPage(n)}
-                                    aria-current={
-                                        safePage === n ? "page" : undefined
-                                    }
-                                    className={cn(
-                                        "min-w-[40px] rounded-full border px-3 py-2 text-sm font-medium transition-all",
-                                        safePage === n
-                                            ? "border-transparent bg-brand-gradient text-ink-900 shadow-glow"
-                                            : "border-white/10 bg-white/[0.04] text-ink-100 hover:border-white/25 hover:bg-white/10",
-                                    )}
-                                >
-                                    {n}
-                                </button>
-                            ),
-                        )}
+                        {Array.from(
+                            { length: totalPages },
+                            (_, i) => i + 1,
+                        ).map((n) => (
+                            <button
+                                key={n}
+                                type="button"
+                                onClick={() => setPage(n)}
+                                aria-current={
+                                    safePage === n ? "page" : undefined
+                                }
+                                className={cn(
+                                    "min-w-[40px] rounded-full border px-3 py-2 text-sm font-medium transition-all",
+                                    safePage === n
+                                        ? "border-transparent bg-brand-gradient text-ink-900 shadow-glow"
+                                        : "border-white/10 bg-white/[0.04] text-ink-100 hover:border-white/25 hover:bg-white/10",
+                                )}
+                            >
+                                {n}
+                            </button>
+                        ))}
                         <button
                             type="button"
                             onClick={() =>

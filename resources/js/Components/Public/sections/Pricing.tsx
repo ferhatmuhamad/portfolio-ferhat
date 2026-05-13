@@ -18,9 +18,8 @@ import { cn } from "@/lib/cn";
 function idrToUsd(idr: number): number {
     const raw = idr / 14000;
     const tiers = [
-        49, 79, 99, 149, 199, 249, 299, 349, 399, 449, 499, 599, 699, 799,
-        899, 999, 1199, 1499, 1799, 1999, 2499, 2999, 3999, 4999, 5999, 7999,
-        9999,
+        49, 79, 99, 149, 199, 249, 299, 349, 399, 449, 499, 599, 699, 799, 899,
+        999, 1199, 1499, 1799, 1999, 2499, 2999, 3999, 4999, 5999, 7999, 9999,
     ];
     for (const tier of tiers) if (tier >= raw) return tier;
     // Beyond the table: round up to the next .999 increment of 1000
@@ -41,8 +40,7 @@ function displayPrice(
             return formatCurrency(plan.price_usd, "USD", "en-US");
         }
         // Treat any non-USD source as IDR for conversion purposes.
-        const usd =
-            baseCurrency === "USD" ? plan.price : idrToUsd(plan.price);
+        const usd = baseCurrency === "USD" ? plan.price : idrToUsd(plan.price);
         return formatCurrency(usd, "USD", "en-US");
     }
     // IDR view

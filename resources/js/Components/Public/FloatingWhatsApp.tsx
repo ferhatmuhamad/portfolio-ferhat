@@ -38,12 +38,9 @@ export function FloatingWhatsApp() {
 
     const isID = locale === "id";
     // Translation key with safe fallback in both languages.
-    const label =
-        t("whatsapp.floatingLabel", {
-            defaultValue: isID
-                ? "Kirimi saya pesan"
-                : "Send me a message",
-        });
+    const label = t("whatsapp.floatingLabel", {
+        defaultValue: isID ? "Kirimi saya pesan" : "Send me a message",
+    });
 
     return (
         <div

@@ -11,14 +11,14 @@ manual) tertimpa oleh seeder lokal (hanya 6 project: ID 7–12).
 
 ## Hasil recovery dari raw block `/dev/sda1`
 
-| Asset | Status | Lokasi / Detail |
-|---|---|---|
-| Project text (titles, descriptions, dll) | **1 dari ~22 ter-recover** | "Infrastructure Metal Casting Company Profile — Futago Karya" — utuh dari WAL block |
-| Cover images | **18 file** masih ada | `storage/app/public/projects/covers/` (tidak disentuh deploy) |
-| Gallery images | **~60 file** masih ada | `storage/app/public/projects/gallery/` (tidak disentuh deploy) |
-| Project IDs yang sempat dibuat/edit | 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 21, 22, 23, 24, 25, 26, 28 | Dari nginx access log |
-| WAL/journal SQLite | **Tidak ada** | Ikut ter-overwrite |
-| Backup BT-Panel | **Tidak ada** | `/www/backup/` cuma berisi config; tidak ada cron untuk DB SQLite |
+| Asset                                    | Status                                                                  | Lokasi / Detail                                                                     |
+| ---------------------------------------- | ----------------------------------------------------------------------- | ----------------------------------------------------------------------------------- |
+| Project text (titles, descriptions, dll) | **1 dari ~22 ter-recover**                                              | "Infrastructure Metal Casting Company Profile — Futago Karya" — utuh dari WAL block |
+| Cover images                             | **18 file** masih ada                                                   | `storage/app/public/projects/covers/` (tidak disentuh deploy)                       |
+| Gallery images                           | **~60 file** masih ada                                                  | `storage/app/public/projects/gallery/` (tidak disentuh deploy)                      |
+| Project IDs yang sempat dibuat/edit      | 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 21, 22, 23, 24, 25, 26, 28 | Dari nginx access log                                                               |
+| WAL/journal SQLite                       | **Tidak ada**                                                           | Ikut ter-overwrite                                                                  |
+| Backup BT-Panel                          | **Tidak ada**                                                           | `/www/backup/` cuma berisi config; tidak ada cron untuk DB SQLite                   |
 
 ### Kenapa cuma 1 yang ter-recover
 
@@ -70,32 +70,33 @@ tapi hanya berisi nama file cover + ID, bukan field text lengkap.
 Cover image masih utuh di server. Berikut mapping `cover filename → upload time`
 (urut waktu — kemungkinan urutan input project):
 
-| # | Cover (di `storage/app/public/projects/covers/`) | Uploaded |
-|---|---|---|
-| 1 | `XU30FDro3WAtklJ2M4OrGJsI1QH5KJZkgQfPzhLA.png` | May 10 11:15 |
-| 2 | `DEQ40Dqzk2Zzr56h90XB7B5MR4qut8rx0f0niMuR.png` | May 10 14:21 |
-| 3 | `V2ZGJZ8vbYcl9HxiLdaLlEXmuwA2yMvme0UkzwnS.png` | May 10 14:43 |
-| 4 | `SWamZAFAZ9mcRV7ElVES1DnoE6EqF7lwWTgeyON5.png` | May 10 14:51 |
-| 5 | `lL183m5F20xXNx7FlZtgezV1lAnbvGwghaHTHMHJ.png` | May 10 15:00 |
-| 6 | `KMEZ7KvddRZ9KlQTfbJGsNNwJtmVyBadYcwuyKqi.png` | May 10 15:08 |
-| 7 | `42XxxmZsZAfteBfIRIhbStXz5b9fQKFxHHmvJkUQ.png` | May 10 15:11 |
-| 8 | `LYfHi8yURdRqcXChvlQ3JWhgV2bMilulvF96PfpN.png` | May 10 15:16 ← **Futago Karya (sudah ada)** |
-| 9 | `A6B6hSGaLmPzLteK3TQxMP0oUuqyJgzasPVzzyL2.png` | May 10 15:20 |
-| 10 | `WGRbKBW6dMYjyKdBMvVQLpHnGDiXF4HxFw8pAjK6.png` | May 10 15:25 |
-| 11 | `s0q8KRER4UdVxYzi3ABwHcLMiNbZfkT1522YhSym.png` | May 10 15:33 |
-| 12 | `wsjukKbKXvuSg1B7BCerSacKXXlMZnlJCxNZVfvn.png` | May 10 15:45 |
-| 13 | `iMIYcGrBkmNtIh5cObS1QlodaDb3BIPrxsYjpJKY.png` | May 10 15:54 |
-| 14 | `VXKrlI4fZD60IwGFtxMGfN46FgVPmNVSiBHVJzDY.png` | May 10 15:58 |
-| 15 | `T4ZgtxRisJdZd7zi96J2037Lh9amCeBlc2KvIBKp.png` | May 10 16:04 |
-| 16 | `LFqOIGbZfPWdlw8riFXtmXpVJAPHun7SOleLGqDN.png` | May 10 16:08 |
-| 17 | `eD0qv5nRxKvXw7NYss5jXgdeq56snH1OoPy6eTce.png` | May 10 16:15 |
-| 18 | `80J0zUkaUkfMdCTOkYklkhZbFn36PahZk1Z0qlbP.png` | May 10 16:24 |
+| #   | Cover (di `storage/app/public/projects/covers/`) | Uploaded                                    |
+| --- | ------------------------------------------------ | ------------------------------------------- |
+| 1   | `XU30FDro3WAtklJ2M4OrGJsI1QH5KJZkgQfPzhLA.png`   | May 10 11:15                                |
+| 2   | `DEQ40Dqzk2Zzr56h90XB7B5MR4qut8rx0f0niMuR.png`   | May 10 14:21                                |
+| 3   | `V2ZGJZ8vbYcl9HxiLdaLlEXmuwA2yMvme0UkzwnS.png`   | May 10 14:43                                |
+| 4   | `SWamZAFAZ9mcRV7ElVES1DnoE6EqF7lwWTgeyON5.png`   | May 10 14:51                                |
+| 5   | `lL183m5F20xXNx7FlZtgezV1lAnbvGwghaHTHMHJ.png`   | May 10 15:00                                |
+| 6   | `KMEZ7KvddRZ9KlQTfbJGsNNwJtmVyBadYcwuyKqi.png`   | May 10 15:08                                |
+| 7   | `42XxxmZsZAfteBfIRIhbStXz5b9fQKFxHHmvJkUQ.png`   | May 10 15:11                                |
+| 8   | `LYfHi8yURdRqcXChvlQ3JWhgV2bMilulvF96PfpN.png`   | May 10 15:16 ← **Futago Karya (sudah ada)** |
+| 9   | `A6B6hSGaLmPzLteK3TQxMP0oUuqyJgzasPVzzyL2.png`   | May 10 15:20                                |
+| 10  | `WGRbKBW6dMYjyKdBMvVQLpHnGDiXF4HxFw8pAjK6.png`   | May 10 15:25                                |
+| 11  | `s0q8KRER4UdVxYzi3ABwHcLMiNbZfkT1522YhSym.png`   | May 10 15:33                                |
+| 12  | `wsjukKbKXvuSg1B7BCerSacKXXlMZnlJCxNZVfvn.png`   | May 10 15:45                                |
+| 13  | `iMIYcGrBkmNtIh5cObS1QlodaDb3BIPrxsYjpJKY.png`   | May 10 15:54                                |
+| 14  | `VXKrlI4fZD60IwGFtxMGfN46FgVPmNVSiBHVJzDY.png`   | May 10 15:58                                |
+| 15  | `T4ZgtxRisJdZd7zi96J2037Lh9amCeBlc2KvIBKp.png`   | May 10 16:04                                |
+| 16  | `LFqOIGbZfPWdlw8riFXtmXpVJAPHun7SOleLGqDN.png`   | May 10 16:08                                |
+| 17  | `eD0qv5nRxKvXw7NYss5jXgdeq56snH1OoPy6eTce.png`   | May 10 16:15                                |
+| 18  | `80J0zUkaUkfMdCTOkYklkhZbFn36PahZk1Z0qlbP.png`   | May 10 16:24                                |
 
 Cover #8 sudah dipakai Futago Karya. Sisanya **17 cover image** yang harus
 dipasangkan ulang dengan title/description-nya. Anda bisa buka satu per satu
 file PNG-nya untuk mengingat project-nya.
 
 Project name yang anda pernah sebutkan dan kemungkinan masuk dalam 17 itu:
+
 - SIAKAD UM OKU Timur (vue)
 - Industrial Solutions Company Profile Website — Futake Indonesia (wordpress)
 - Industrial Machinery Manufacturing Company Profile — Kembar Teknika (wordpress)
@@ -108,29 +109,30 @@ Project name yang anda pernah sebutkan dan kemungkinan masuk dalam 17 itu:
 1. **`deploy.sh` sudah ditambal** dengan `--exclude='/database/*.sqlite*'`.
    Verifikasi dengan dry-run sebelum deploy berikutnya:
 
-   ```sh
-   rsync -avz --dry-run --delete \
-     --exclude='/database/*.sqlite*' \
-     --exclude='/.env' --exclude='/storage/' \
-     ./ user@host:/dest/
-   ```
+    ```sh
+    rsync -avz --dry-run --delete \
+      --exclude='/database/*.sqlite*' \
+      --exclude='/.env' --exclude='/storage/' \
+      ./ user@host:/dest/
+    ```
 
 2. **Tambahkan auto-backup DB** sebelum tiap deploy. Edit `deploy.sh` di blok
    REMOTE_SCRIPT, sebelum step rsync stage→dest:
 
-   ```sh
-   if [ -f "$DEST/database/database.sqlite" ]; then
-     ts=$(date +%Y%m%d-%H%M%S)
-     sudo -u www cp "$DEST/database/database.sqlite" \
-       "/www/backup/database/portfolio-$ts.sqlite"
-   fi
-   ```
-   Buat dulu folder targetnya: `sudo mkdir -p /www/backup/database`.
+    ```sh
+    if [ -f "$DEST/database/database.sqlite" ]; then
+      ts=$(date +%Y%m%d-%H%M%S)
+      sudo -u www cp "$DEST/database/database.sqlite" \
+        "/www/backup/database/portfolio-$ts.sqlite"
+    fi
+    ```
+
+    Buat dulu folder targetnya: `sudo mkdir -p /www/backup/database`.
 
 3. **Pertimbangkan migrasi ke MySQL** — BT-Panel bisa auto-backup MySQL via
    cron, sedangkan SQLite di luar cakupannya.
 
 4. **Cron backup harian SQLite** sebagai jaring pengaman:
-   ```cron
-   30 2 * * * cp /www/wwwroot/ferhatmuhamad.web.id/database/database.sqlite /www/backup/database/portfolio-$(date +\%F).sqlite && find /www/backup/database -name 'portfolio-*.sqlite' -mtime +14 -delete
-   ```
+    ```cron
+    30 2 * * * cp /www/wwwroot/ferhatmuhamad.web.id/database/database.sqlite /www/backup/database/portfolio-$(date +\%F).sqlite && find /www/backup/database -name 'portfolio-*.sqlite' -mtime +14 -delete
+    ```

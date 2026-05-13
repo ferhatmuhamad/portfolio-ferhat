@@ -102,7 +102,6 @@ export function DetailHero({ eyebrow, title, breadcrumbs }: DetailHeroProps) {
                         {title}
                     </h1>
                 </div>
-
             </div>
         </section>
     );

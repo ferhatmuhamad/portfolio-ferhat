@@ -8,9 +8,8 @@ import { useEffect, useState } from "react";
 function detectMobile(): boolean {
     if (typeof window === "undefined") return false;
     try {
-        return window.matchMedia(
-            "(pointer: coarse), (max-width: 767px)",
-        ).matches;
+        return window.matchMedia("(pointer: coarse), (max-width: 767px)")
+            .matches;
     } catch {
         return false;
     }
@@ -20,9 +19,7 @@ export function useIsMobile(): boolean {
     const [isMobile, setIsMobile] = useState<boolean>(detectMobile);
     useEffect(() => {
         if (typeof window === "undefined") return;
-        const mq = window.matchMedia(
-            "(pointer: coarse), (max-width: 767px)",
-        );
+        const mq = window.matchMedia("(pointer: coarse), (max-width: 767px)");
         const update = () => setIsMobile(mq.matches);
         update();
         mq.addEventListener?.("change", update);

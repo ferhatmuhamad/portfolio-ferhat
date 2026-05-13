@@ -94,11 +94,11 @@ class PublicController extends Controller
             if ($to) {
                 \Illuminate\Support\Facades\Mail::to($to)->send(
                     new ContactMessageMail(
-                        senderName:  $message->name,
+                        senderName: $message->name,
                         senderEmail: $message->email,
                         subjectLine: $message->subject,
-                        body:        $message->message,
-                        ipAddress:   $message->ip_address,
+                        body: $message->message,
+                        ipAddress: $message->ip_address,
                     )
                 );
             }
